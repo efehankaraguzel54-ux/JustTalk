@@ -7,208 +7,147 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
-        /* Tema Değişkenleri (Light & Dark Mode) */
+        /* 1. LIGHT TEMA (Klasik Mavi/Aydınlık) */
         :root {
-            --bg-main: #f8fafc;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --header-bg: #ffffff;
-            --border-color: #e2e8f0;
-            --card-bg: #ffffff;
-            --card-shadow: rgba(15, 23, 42, 0.04);
-            --input-bg: #f8fafc;
-            --nav-bg: #ffffff;
-            --btn-top-bg: #f1f5f9;
-            --btn-top-hover: #e2e8f0;
-            --chat-ai-bg: #ffffff;
-            --chat-user-bg: #2563eb;
-            --chat-user-text: #ffffff;
-            --completed-bg: #f1f5f9;
-            --modal-bg: #ffffff;
-            --modal-overlay: rgba(15, 23, 42, 0.4);
+            --bg-main: #f8fafc; --bg-card: #ffffff; --text-main: #1e293b; --text-muted: #64748b;
+            --primary: #2563eb; --primary-hover: #1d4ed8; --accent: #e0f2fe; --accent-text: #0369a1;
+            --header-bg: #ffffff; --border-color: #e2e8f0; --card-shadow: rgba(15,23,42,0.05);
+            --completed-bg: #f1f5f9; --nav-bg: #ffffff; --chat-user: #2563eb; --chat-ai: #ffffff;
         }
-
+        /* 2. DARK TEMA (Gece Mavisi) */
         [data-theme="dark"] {
-            --bg-main: #0d1117;
-            --text-main: #e6edf3;
-            --text-muted: #8b949e;
-            --header-bg: #161b22;
-            --border-color: #30363d;
-            --card-bg: #161b22;
-            --card-shadow: rgba(0, 0, 0, 0.25);
-            --input-bg: #0d1117;
-            --nav-bg: #161b22;
-            --btn-top-bg: #21262d;
-            --btn-top-hover: #30363d;
-            --chat-ai-bg: #21262d;
-            --chat-user-bg: #1f6feb;
-            --chat-user-text: #ffffff;
-            --completed-bg: #0d1117;
-            --modal-bg: #161b22;
-            --modal-overlay: rgba(0, 0, 0, 0.7);
+            --bg-main: #0d1527; --bg-card: #131f37; --text-main: #f1f5f9; --text-muted: #94a3b8;
+            --primary: #0284c7; --primary-hover: #0369a1; --accent: #1e2e4f; --accent-text: #7dd3fc;
+            --header-bg: #0d1527; --border-color: #223254; --card-shadow: rgba(0,0,0,0.3);
+            --completed-bg: #0f172a; --nav-bg: #0d1527; --chat-user: #0284c7; --chat-ai: #131f37;
+        }
+        /* 3. SUNSET TEMA (Canlı Turuncu & Kırmızı) */
+        [data-theme="sunset"] {
+            --bg-main: #fff7ed; --bg-card: #ffffff; --text-main: #431407; --text-muted: #9a3412;
+            --primary: #ea580c; --primary-hover: #c2410c; --accent: #ffedd5; --accent-text: #c2410c;
+            --header-bg: #ffffff; --border-color: #fed7aa; --card-shadow: rgba(234,88,12,0.08);
+            --completed-bg: #fff7ed; --nav-bg: #ffffff; --chat-user: #ea580c; --chat-ai: #ffffff;
+        }
+        /* 4. FOREST TEMA (Doğal Yeşil Tonları) */
+        [data-theme="forest"] {
+            --bg-main: #f0fdf4; --bg-card: #ffffff; --text-main: #14532d; --text-muted: #166534;
+            --primary: #16a34a; --primary-hover: #15803d; --accent: #dcfce7; --accent-text: #15803d;
+            --header-bg: #ffffff; --border-color: #bbf7d0; --card-shadow: rgba(22,163,74,0.08);
+            --completed-bg: #f0fdf4; --nav-bg: #ffffff; --chat-user: #16a34a; --chat-ai: #ffffff;
+        }
+        /* 5. BERRY TEMA (Tatlı Mor & Pembe) */
+        [data-theme="berry"] {
+            --bg-main: #faf5ff; --bg-card: #ffffff; --text-main: #4c1d95; --text-muted: #6d28d9;
+            --primary: #9333ea; --primary-hover: #7e22ce; --accent: #f3e8ff; --accent-text: #7e22ce;
+            --header-bg: #ffffff; --border-color: #e9d5ff; --card-shadow: rgba(147,51,234,0.08);
+            --completed-bg: #faf5ff; --nav-bg: #ffffff; --chat-user: #9333ea; --chat-ai: #ffffff;
+        }
+        /* 6. COFFEE TEMA (Krem & Kahverengi) */
+        [data-theme="coffee"] {
+            --bg-main: #fdf8f6; --bg-card: #ffffff; --text-main: #451a03; --text-muted: #78350f;
+            --primary: #92400e; --primary-hover: #78350f; --accent: #ffedd5; --accent-text: #92400e;
+            --header-bg: #ffffff; --border-color: #fed7aa; --card-shadow: rgba(146,64,14,0.08);
+            --completed-bg: #fdf8f6; --nav-bg: #ffffff; --chat-user: #92400e; --chat-ai: #ffffff;
         }
 
         body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
+            background-color: var(--bg-main); color: var(--text-main);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            display: flex; flex-direction: column; height: 100vh; overflow: hidden;
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
-
         header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 18px;
-            background-color: var(--header-bg);
-            border-bottom: 1px solid var(--border-color);
-            box-shadow: 0 2px 4px var(--card-shadow);
-            flex-shrink: 0;
-            transition: background-color 0.3s ease;
+            display: flex; justify-content: space-between; align-items: center; padding: 14px 18px;
+            background-color: var(--header-bg); border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0; transition: background-color 0.4s ease;
         }
-        .header-left { display: flex; flex-direction: column; }
-        .clock-time { font-size: 1.25rem; font-weight: 800; color: #2563eb; letter-spacing: -0.5px; }
-        [data-theme="dark"] .clock-time { color: #58a6ff; }
-        .clock-date { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; }
-        
-        .header-right { display: flex; align-items: center; gap: 12px; }
+        .header-left { display: flex; flex-direction: column; gap: 2px; }
+        .clock-time { font-size: 1.25rem; font-weight: 800; color: var(--primary); letter-spacing: -0.5px; }
+        .clock-date { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; }
+        .header-right { display: flex; align-items: center; gap: 10px; }
         .brand-wrap { text-align: right; }
         h1 { font-size: 1.2rem; font-weight: 900; color: var(--text-main); }
-        .by-tag { font-size: 0.72rem; color: #0284c7; font-weight: 600; display: block; }
-        [data-theme="dark"] .by-tag { color: #38bdf8; }
+        .by-tag { font-size: 0.72rem; color: var(--primary); font-weight: 700; display: block; margin-top: -2px; }
 
         .btn-top {
-            background-color: var(--btn-top-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 6px 10px;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.15s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background-color: var(--completed-bg); border: 1px solid var(--border-color); color: var(--text-main);
+            padding: 6px 10px; border-radius: 10px; font-size: 1.1rem; cursor: pointer; transition: all 0.2s;
         }
-        .btn-top:active { background-color: var(--btn-top-hover); }
-        .btn-top.text-btn { font-size: 0.8rem; font-weight: 600; padding: 6px 12px; }
+        .btn-top:active { background-color: var(--primary); color: #fff; border-color: var(--primary); }
+        .btn-text { font-size: 0.8rem; font-weight: 700; padding: 6px 12px; }
 
         main { flex: 1; overflow-y: auto; padding: 16px; position: relative; }
         .tab-view { display: none; height: 100%; flex-direction: column; }
         .tab-view.active { display: flex; }
 
-        .reminders-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .section-title { font-size: 1.1rem; font-weight: 700; color: var(--text-main); }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .section-title { font-size: 1.1rem; font-weight: 800; color: var(--text-main); }
+        #statusText { text-align: center; font-size: 0.82rem; color: var(--primary); font-weight: 700; min-height: 18px; margin-bottom: 6px; }
 
-        #statusText { text-align: center; font-size: 0.82rem; color: #0284c7; min-height: 18px; font-weight: 600; margin-bottom: 6px; }
-        [data-theme="dark"] #statusText { color: #58a6ff; }
-
-        .cards-list { display: flex; flex-direction: column; gap: 12px; padding-bottom: 80px; }
-        .reminder-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 14px 16px;
-            display: flex; flex-direction: column; gap: 8px;
-            box-shadow: 0 4px 12px var(--card-shadow);
-            border-left: 5px solid #3b82f6;
-            transition: all 0.15s ease;
+        .cards-list { display: flex; flex-direction: column; gap: 12px; padding-bottom: 90px; }
+        .card-base {
+            background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px;
+            padding: 14px 16px; display: flex; flex-direction: column; gap: 8px;
+            box-shadow: 0 4px 14px var(--card-shadow); border-left: 5px solid var(--primary);
+            transition: all 0.2s ease;
         }
-        .reminder-card.completed { background-color: var(--completed-bg); border-left-color: var(--text-muted); opacity: 0.7; }
-        .reminder-card.completed .main-text { text-decoration: line-through; color: var(--text-muted); }
+        .card-base.completed { background-color: var(--completed-bg); border-left-color: var(--text-muted); opacity: 0.75; }
+        .card-base.completed .main-text { text-decoration: line-through; color: var(--text-muted); }
         
         .card-header { display: flex; justify-content: space-between; align-items: center; }
-        .cat-badge {
-            font-size: 0.72rem; font-weight: 700; padding: 3px 8px; border-radius: 6px;
-            background-color: #e0f2fe; color: #0369a1;
-        }
-        [data-theme="dark"] .cat-badge { background-color: #0c2d48; color: #7dd3fc; }
-        
+        .cat-badge { background-color: var(--accent); color: var(--accent-text); font-size: 0.72rem; font-weight: 800; padding: 4px 10px; border-radius: 8px; }
+        .time-badge { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; padding: 2px 6px; }
         .card-actions { display: flex; align-items: center; gap: 6px; }
-        .time-badge {
-            font-size: 0.78rem; color: var(--text-muted); background-color: var(--bg-main);
-            padding: 2px 6px; border-radius: 6px; border: 1px solid var(--border-color);
-        }
-        .btn-card-action { background: none; border: none; cursor: pointer; padding: 4px; font-size: 0.85rem; }
-        .main-text { font-size: 0.98rem; font-weight: 600; color: var(--text-main); cursor: pointer; line-height: 1.4; }
+        .btn-icon { background: var(--completed-bg); border: 1px solid var(--border-color); border-radius: 8px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.85rem; }
+        .main-text { font-size: 1rem; font-weight: 600; color: var(--text-main); cursor: pointer; line-height: 1.4; }
 
+        /* Yüzen Mikrofon */
         .fab-mic {
-            position: absolute; bottom: 20px; right: 20px; width: 60px; height: 60px;
-            border-radius: 50%; background-color: #2563eb; color: #ffffff; border: none;
-            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.35); display: flex; align-items: center;
-            justify-content: center; cursor: pointer; transition: all 0.2s; z-index: 10;
+            position: absolute; bottom: 20px; right: 20px; width: 64px; height: 64px; border-radius: 50%;
+            background-color: var(--primary); color: #ffffff; border: 3px solid var(--accent);
+            box-shadow: 0 8px 20px var(--card-shadow); display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.2s; z-index: 10;
         }
         .fab-mic:active { transform: scale(0.92); }
-        .fab-mic.listening { background-color: #ef4444 !important; animation: pulseFab 1.2s infinite; }
-        .fab-mic.thinking { background-color: #8b5cf6 !important; }
+        .fab-mic.listening { background-color: #ef4444 !important; border-color: #fca5a5 !important; animation: pulseFab 1.2s infinite; }
+        .fab-mic.thinking { background-color: #8b5cf6 !important; border-color: #c4b5fd !important; }
         @keyframes pulseFab { 0% { transform: scale(0.95); } 50% { transform: scale(1.05); } 100% { transform: scale(0.95); } }
 
-        /* Notlar Sekmesi */
-        .notes-form {
-            background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px;
-            padding: 14px; display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;
-            box-shadow: 0 2px 8px var(--card-shadow);
-        }
-        .input-base {
-            background-color: var(--input-bg); border: 1px solid var(--border-color);
-            border-radius: 8px; padding: 8px 12px; font-size: 0.9rem; color: var(--text-main); outline: none;
-        }
-        .input-base:focus { border-color: #3b82f6; }
-        
-        .note-card {
-            background-color: var(--card-bg); border: 1px solid #fed7aa; border-left: 5px solid #f97316;
-            border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 6px;
-            box-shadow: 0 4px 10px var(--card-shadow);
-        }
-        [data-theme="dark"] .note-card { border-color: #7c2d12; border-left-color: #ea580c; }
-        .note-title { font-weight: 700; font-size: 1rem; color: #9a3412; }
-        [data-theme="dark"] .note-title { color: #fdba74; }
-        .note-body { font-size: 0.9rem; color: var(--text-main); line-height: 1.4; white-space: pre-wrap; }
+        /* Notlar ve Formlar */
+        .input-base { background-color: var(--bg-main); border: 1px solid var(--border-color); border-radius: 10px; padding: 10px 12px; font-size: 0.95rem; color: var(--text-main); outline: none; width: 100%; font-weight: 500; }
+        .input-base:focus { border-color: var(--primary); }
 
         /* Sohbet (Chat) Sekmesi */
         .chat-container { display: flex; flex-direction: column; height: 100%; }
         .chat-messages { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-bottom: 12px; }
-        .chat-bubble { max-width: 82%; padding: 10px 14px; border-radius: 14px; font-size: 0.92rem; line-height: 1.45; }
-        .bubble-user { align-self: flex-end; background-color: var(--chat-user-bg); color: var(--chat-user-text); border-bottom-right-radius: 4px; }
-        .bubble-ai { align-self: flex-start; background-color: var(--chat-ai-bg); color: var(--text-main); border: 1px solid var(--chat-ai-border); border-bottom-left-radius: 4px; box-shadow: 0 2px 6px var(--card-shadow); }
-        .chat-input-bar { display: flex; gap: 8px; padding-top: 8px; border-top: 1px solid var(--border-color); background-color: var(--bg-main); }
+        .chat-bubble { max-width: 85%; padding: 12px 16px; border-radius: 16px; font-size: 0.95rem; line-height: 1.5; font-weight: 500; }
+        .bubble-user { align-self: flex-end; background-color: var(--chat-user); color: #fff; border-bottom-right-radius: 4px; }
+        .bubble-ai { align-self: flex-start; background-color: var(--chat-ai); color: var(--text-main); border: 1px solid var(--border-color); border-bottom-left-radius: 4px; box-shadow: 0 4px 10px var(--card-shadow); }
+        .chat-input-bar { display: flex; gap: 8px; padding-top: 10px; border-top: 1px solid var(--border-color); background-color: var(--bg-main); }
 
         /* Alt Navigasyon Barı */
         nav.bottom-nav {
             display: flex; background-color: var(--nav-bg); border-top: 1px solid var(--border-color);
-            padding: 6px 12px 18px 12px; justify-content: space-around; flex-shrink: 0;
-            box-shadow: 0 -2px 8px var(--card-shadow); transition: background-color 0.3s ease;
+            padding: 8px 12px 20px 12px; justify-content: space-around; flex-shrink: 0; box-shadow: 0 -4px 12px var(--card-shadow);
         }
         .nav-item {
             display: flex; flex-direction: column; align-items: center; background: none; border: none;
-            color: var(--text-muted); font-size: 0.75rem; font-weight: 600; gap: 3px; cursor: pointer;
-            padding: 4px 14px; border-radius: 10px; transition: all 0.15s;
+            color: var(--text-muted); font-size: 0.75rem; font-weight: 700; gap: 4px; cursor: pointer;
+            padding: 6px 16px; border-radius: 12px; transition: all 0.2s;
         }
-        .nav-item.active { color: #2563eb; background-color: var(--completed-bg); }
-        [data-theme="dark"] .nav-item.active { color: #58a6ff; }
+        .nav-item.active { color: var(--primary); background-color: var(--accent); }
         .nav-item svg { width: 22px; height: 22px; }
 
         /* Modallar */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: var(--modal-overlay); backdrop-filter: blur(3px);
-            display: none; align-items: center; justify-content: center; padding: 16px; z-index: 100;
-        }
-        .modal-box {
-            background-color: var(--modal-bg); border: 1px solid var(--border-color); border-radius: 18px;
-            width: 100%; max-width: 420px; padding: 20px; display: flex; flex-direction: column; gap: 12px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-        }
-        .modal-title { font-size: 1.1rem; font-weight: 800; color: var(--text-main); }
-        .modal-field { display: flex; flex-direction: column; gap: 4px; }
-        .modal-field label { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); }
-        .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 6px; }
-        .btn-primary { background-color: #2563eb; color: #ffffff; border: none; padding: 8px 14px; border-radius: 8px; font-weight: 600; cursor: pointer; }
-        .btn-secondary { background-color: var(--btn-top-bg); color: var(--text-main); border: 1px solid var(--border-color); padding: 8px 14px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.5); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; padding: 16px; z-index: 100; }
+        .modal-box { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; width: 100%; max-width: 420px; padding: 22px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .modal-title { font-size: 1.15rem; font-weight: 900; color: var(--text-main); }
+        .btn-primary { background-color: var(--primary); color: #fff; border: none; padding: 10px 16px; border-radius: 10px; font-weight: 700; cursor: pointer; }
+        .btn-secondary { background-color: var(--completed-bg); color: var(--text-main); border: 1px solid var(--border-color); padding: 10px 16px; border-radius: 10px; font-weight: 700; cursor: pointer; }
+
+        /* Tema Seçici Butonları */
+        .theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .theme-btn { padding: 12px; border-radius: 12px; border: 2px solid transparent; font-weight: 700; cursor: pointer; text-align: center; }
     </style>
 </head>
 <body>
@@ -223,18 +162,18 @@
                 <h1>JustTalk AI</h1>
                 <span class="by-tag">by Efehan Karagüzel</span>
             </div>
-            <button id="themeToggleBtn" class="btn-top" title="Tema Değiştir">🌙</button>
+            <button id="themeMenuBtn" class="btn-top" title="Temalar">🎨</button>
         </div>
     </header>
 
     <main>
-        <!-- 1. SEKME: ANIMSATICI (GÖREVLER) -->
+        <!-- 1. SEKME: GÖREVLER -->
         <div id="tabReminders" class="tab-view active">
-            <div class="reminders-header">
+            <div class="section-header">
                 <span class="section-title">Görevler</span>
                 <div style="display: flex; gap: 6px;">
-                    <button id="catsBtn" class="btn-top text-btn" type="button">Kategoriler</button>
-                    <button id="settingsBtn" class="btn-top text-btn" type="button">⚙️ API</button>
+                    <button id="catsBtn" class="btn-top btn-text" type="button">Kategoriler</button>
+                    <button id="settingsBtn" class="btn-top btn-text" type="button">⚙️ API</button>
                 </div>
             </div>
             <div id="statusText"></div>
@@ -242,8 +181,8 @@
                 <p style="text-align: center; color: var(--text-muted); margin-top: 30px;">Görevler yükleniyor...</p>
             </div>
 
-            <button id="micBtn" class="fab-mic" type="button" aria-label="Konuş">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <button id="micBtn" class="fab-mic" type="button">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
                     <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
                     <line x1="12" y1="19" x2="12" y2="23"></line>
@@ -252,29 +191,28 @@
             </button>
         </div>
 
-        <!-- 2. SEKME: NOTLAR BÖLÜMÜ -->
+        <!-- 2. SEKME: NOTLAR -->
         <div id="tabNotes" class="tab-view">
             <span class="section-title" style="margin-bottom: 12px;">Hızlı Not Defteri</span>
-            <div class="notes-form">
-                <input type="text" id="noteTitleInput" class="input-base" placeholder="Not Başlığı (örn: Fikirler, Proje Notu)">
+            <div class="card-base" style="border-left-color: #f59e0b; padding: 16px;">
+                <input type="text" id="noteTitleInput" class="input-base" placeholder="Not Başlığı (örn: Fikirler)">
                 <textarea id="noteContentInput" class="input-base" rows="3" placeholder="Notunuzu buraya yazın..."></textarea>
                 <div style="display: flex; gap: 8px;">
-                    <!-- Notlar için kategori alanı Select (Açılır Menü) yapıldı -->
                     <select id="noteCatSelect" class="input-base" style="flex: 1;"></select>
-                    <button id="saveNoteBtn" class="btn-primary" style="background-color: #ea580c;">Kaydet</button>
+                    <button id="saveNoteBtn" class="btn-primary" style="background-color: #f59e0b; color:#fff;">Kaydet</button>
                 </div>
             </div>
-            <div id="notesList" class="cards-list">
-                <p style="text-align: center; color: var(--text-muted); margin-top: 20px;">Henüz not eklenmedi.</p>
+            <div id="notesList" class="cards-list" style="margin-top: 16px;">
+                <p style="text-align: center; color: var(--text-muted);">Henüz not eklenmedi.</p>
             </div>
         </div>
 
-        <!-- 3. SEKME: GEMINI SOHBET (AI) -->
+        <!-- 3. SEKME: SOHBET -->
         <div id="tabChat" class="tab-view">
             <div class="chat-container">
                 <div id="chatMessages" class="chat-messages">
                     <div class="chat-bubble bubble-ai">
-                        Merhaba Efehan! Ben Gemini. Aklına takılan herhangi bir konuyu sorabilir veya güncel görevlerinle ilgili analiz yapmamı isteyebilirsin.
+                        Merhaba Efehan! Mikrofona dokunarak "Yarın hava nasıl?" gibi sorular sorabilir veya doğrudan buradan yazabilirsin. Yeni görev atamalarını da sesli yapabilirsin, ben cümleni anlayıp doğru sekmeye yönlendireceğim!
                     </div>
                 </div>
                 <div class="chat-input-bar">
@@ -285,36 +223,61 @@
         </div>
     </main>
 
-    <!-- ALT SEKMELER MENÜSÜ -->
+    <!-- ALT NAVİGASYON -->
     <nav class="bottom-nav">
         <button class="nav-item active" onclick="switchTab('reminders')">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
             <span>Görevler</span>
         </button>
         <button class="nav-item" onclick="switchTab('notes')">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
             <span>Notlar</span>
         </button>
         <button class="nav-item" onclick="switchTab('chat')">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
             <span>AI Sohbet</span>
         </button>
     </nav>
 
-    <!-- Görev Düzenleme Modalı -->
+    <!-- TEMA MODALI -->
+    <div id="themeModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-title">Tema Seçimi</div>
+            <div class="theme-grid">
+                <button class="theme-btn" style="background:#f8fafc; color:#1e293b; border-color:#2563eb;" onclick="setTheme('light')">Klasik Mavi ☀️</button>
+                <button class="theme-btn" style="background:#0d1527; color:#f1f5f9; border-color:#0284c7;" onclick="setTheme('dark')">Gece Mavisi 🌙</button>
+                <button class="theme-btn" style="background:#fff7ed; color:#431407; border-color:#ea580c;" onclick="setTheme('sunset')">Gün Batımı 🌅</button>
+                <button class="theme-btn" style="background:#f0fdf4; color:#14532d; border-color:#16a34a;" onclick="setTheme('forest')">Doğal Yeşil 🌲</button>
+                <button class="theme-btn" style="background:#faf5ff; color:#4c1d95; border-color:#9333ea;" onclick="setTheme('berry')">Tatlı Mor 🍇</button>
+                <button class="theme-btn" style="background:#fdf8f6; color:#451a03; border-color:#92400e;" onclick="setTheme('coffee')">Kahve & Krem ☕</button>
+            </div>
+            <div class="modal-actions"><button class="btn-secondary" onclick="document.getElementById('themeModal').style.display='none'">Kapat</button></div>
+        </div>
+    </div>
+
+    <!-- KATEGORİ MODALI -->
+    <div id="catsModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-title">Kategori Yönetimi</div>
+            <div style="display: flex; gap: 6px;">
+                <input type="text" id="newCatInput" class="input-base" style="flex:1;" placeholder="Yeni kategori...">
+                <button id="addCatBtn" class="btn-primary">Ekle</button>
+            </div>
+            <div id="catsChipsContainer" style="display: flex; flex-wrap: wrap; gap: 6px; max-height: 160px; overflow-y: auto;"></div>
+            <div class="modal-actions"><button class="btn-secondary" onclick="document.getElementById('catsModal').style.display='none'">Kapat</button></div>
+        </div>
+    </div>
+
+    <!-- DÜZENLEME MODALI -->
     <div id="editModal" class="modal-overlay">
         <div class="modal-box">
             <div class="modal-title">Görevi Düzenle</div>
-            <div class="modal-field">
-                <label>Görev Metni</label>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+                <label style="font-size:0.8rem; color:var(--text-muted); font-weight:700;">Görev Metni</label>
                 <input type="text" id="editTextInput" class="input-base">
-            </div>
-            <div class="modal-field">
-                <label>Tarih / Saat</label>
+                <label style="font-size:0.8rem; color:var(--text-muted); font-weight:700;">Tarih / Saat</label>
                 <input type="text" id="editTimeInput" class="input-base">
-            </div>
-            <div class="modal-field">
-                <label>Kategori</label>
+                <label style="font-size:0.8rem; color:var(--text-muted); font-weight:700;">Kategori</label>
                 <select id="editCategorySelect" class="input-base"></select>
             </div>
             <div class="modal-actions">
@@ -324,46 +287,22 @@
         </div>
     </div>
 
-    <!-- Kategori Yönetim Modalı -->
-    <div id="catsModal" class="modal-overlay">
-        <div class="modal-box">
-            <div class="modal-title">Kategori Yönetimi</div>
-            <div style="display: flex; gap: 6px;">
-                <input type="text" id="newCatInput" class="input-base" style="flex:1;" placeholder="Yeni kategori...">
-                <button id="addCatBtn" class="btn-primary">Ekle</button>
-            </div>
-            <div id="catsChipsContainer" style="display: flex; flex-wrap: wrap; gap: 6px; max-height: 160px; overflow-y: auto;"></div>
-            <div class="modal-actions">
-                <button id="catsCloseBtn" class="btn-secondary">Kapat</button>
-            </div>
-        </div>
-    </div>
-
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, deleteDoc, doc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
 
-        // TEMA YÖNETİMİ
-        const themeToggleBtn = document.getElementById('themeToggleBtn');
-        let currentTheme = localStorage.getItem('justtalk_theme') || 'light';
-        if (currentTheme === 'dark') {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            themeToggleBtn.innerText = '☀️';
-        }
+        // TEMALAR
+        const savedTheme = localStorage.getItem('justtalk_theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        
+        window.setTheme = (themeName) => {
+            document.documentElement.setAttribute('data-theme', themeName);
+            localStorage.setItem('justtalk_theme', themeName);
+            document.getElementById('themeModal').style.display = 'none';
+        };
+        document.getElementById('themeMenuBtn').addEventListener('click', () => { document.getElementById('themeModal').style.display = 'flex'; });
 
-        themeToggleBtn.addEventListener('click', () => {
-            if (document.documentElement.getAttribute('data-theme') === 'dark') {
-                document.documentElement.removeAttribute('data-theme');
-                localStorage.setItem('justtalk_theme', 'light');
-                themeToggleBtn.innerText = '🌙';
-            } else {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                localStorage.setItem('justtalk_theme', 'dark');
-                themeToggleBtn.innerText = '☀️';
-            }
-        });
-
-        // FIREBASE KURULUMU
+        // FIREBASE
         const firebaseConfig = {
             apiKey: "AIzaSyD4ZwCI4_e1D8bWfigQ4MAozrC5ZaDDv9A",
             authDomain: "justtalk-ce472.firebaseapp.com",
@@ -377,10 +316,9 @@
         const remindersRef = collection(db, "reminders");
         const notesRef = collection(db, "notes");
         const categoriesRef = collection(db, "custom_categories");
-
         let currentRemindersData = [];
 
-        // SEKME DEĞİŞTİRME
+        // SEKME YÖNETİMİ
         window.switchTab = (tabName) => {
             document.querySelectorAll('.tab-view').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
@@ -396,27 +334,19 @@
             }
         };
 
-        // SAAT VE TARİH
+        // SAAT & KATEGORİ
         function updateClock() {
             const now = new Date();
-            const h = String(now.getHours()).padStart(2, '0');
-            const m = String(now.getMinutes()).padStart(2, '0');
-            const s = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('clockTime').innerText = `${h}:${m}:${s}`;
+            document.getElementById('clockTime').innerText = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
             const days = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
             const months = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
             document.getElementById('clockDate').innerText = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}, ${days[now.getDay()]}`;
         }
-        setInterval(updateClock, 1000);
-        updateClock();
+        setInterval(updateClock, 1000); updateClock();
 
-        // KATEGORİ YÖNETİMİ
         let savedCategories = ["Genel", "Okumak", "Ders", "İş", "Kişisel", "Alışveriş"];
         onSnapshot(categoriesRef, (snap) => {
-            snap.forEach((d) => {
-                const n = d.data().name;
-                if (n && !savedCategories.includes(n)) savedCategories.push(n);
-            });
+            snap.forEach(d => { const n = d.data().name; if (n && !savedCategories.includes(n)) savedCategories.push(n); });
             renderCategorySelects();
         });
 
@@ -425,311 +355,197 @@
             const f = catName.trim().charAt(0).toUpperCase() + catName.trim().slice(1);
             if (!savedCategories.includes(f)) {
                 savedCategories.push(f);
-                const id = f.toLowerCase().replace(/[^a-z0-9]/g, '_');
-                await setDoc(doc(db, "custom_categories", id), { name: f });
+                await setDoc(doc(db, "custom_categories", f.toLowerCase().replace(/[^a-z0-9]/g, '_')), { name: f });
             }
-            renderCategorySelects();
-            return f;
+            renderCategorySelects(); return f;
         }
 
         function renderCategorySelects() {
-            // Görev Düzenleme Kategori Menüsü
-            const selEdit = document.getElementById('editCategorySelect');
-            selEdit.innerHTML = '';
-            
-            // Notlar Kategori Menüsü
-            const selNote = document.getElementById('noteCatSelect');
-            selNote.innerHTML = '';
-            
+            const selEdit = document.getElementById('editCategorySelect'); selEdit.innerHTML = '';
+            const selNote = document.getElementById('noteCatSelect'); selNote.innerHTML = '';
             savedCategories.forEach(c => {
-                const opt1 = document.createElement('option'); opt1.value = c; opt1.innerText = c;
-                const opt2 = document.createElement('option'); opt2.value = c; opt2.innerText = c;
-                selEdit.appendChild(opt1);
-                selNote.appendChild(opt2);
+                selEdit.appendChild(new Option(c, c));
+                selNote.appendChild(new Option(c, c));
             });
-
-            // Kategorileri Yönetme Çipleri
-            const chips = document.getElementById('catsChipsContainer');
-            chips.innerHTML = '';
+            const chips = document.getElementById('catsChipsContainer'); chips.innerHTML = '';
             savedCategories.forEach(c => {
                 const div = document.createElement('div');
-                div.style.cssText = "background:var(--btn-top-bg); border:1px solid var(--border-color); padding:4px 8px; border-radius:6px; font-size:0.8rem; display:flex; align-items:center; gap:6px;";
+                div.style.cssText = "background:var(--completed-bg); border:1px solid var(--border-color); padding:4px 8px; border-radius:8px; font-size:0.85rem; font-weight:700; color:var(--primary); display:flex; gap:6px;";
                 div.innerHTML = `<span>${c}</span>`;
                 if (c !== "Genel") {
-                    const x = document.createElement('span');
-                    x.innerText = '×'; x.style.cssText = "color:#ef4444; cursor:pointer; font-weight:bold;";
-                    x.onclick = async () => {
-                        savedCategories = savedCategories.filter(item => item !== c);
-                        try { await deleteDoc(doc(db, "custom_categories", c.toLowerCase().replace(/[^a-z0-9]/g, '_'))); } catch(e){}
-                        renderCategorySelects();
-                    };
+                    const x = document.createElement('span'); x.innerText = '✕'; x.style.cssText = "color:#ef4444; cursor:pointer;";
+                    x.onclick = async () => { savedCategories = savedCategories.filter(i => i !== c); try { await deleteDoc(doc(db, "custom_categories", c.toLowerCase().replace(/[^a-z0-9]/g, '_'))); } catch(e){} renderCategorySelects(); };
                     div.appendChild(x);
                 }
                 chips.appendChild(div);
             });
         }
 
-        function resolveExactDateTime(rawText) {
-            const now = new Date();
-            let targetDate = new Date(now);
-            let timeStr = "";
-            let matched = false;
-            const text = rawText.toLowerCase();
-
-            if (text.includes("yarın")) { targetDate.setDate(targetDate.getDate() + 1); matched = true; }
-            else if (text.includes("öbür gün") || text.includes("2 gün sonra")) { targetDate.setDate(targetDate.getDate() + 2); matched = true; }
-            else if (text.includes("bugün")) { matched = true; }
-
-            const hMatch = text.match(/saat\s*(\d{1,2})(?::(\d{2}))?/);
-            if (hMatch) {
-                const h = parseInt(hMatch[1], 10);
-                const m = hMatch[2] ? parseInt(hMatch[2], 10) : 0;
-                targetDate.setHours(h, m, 0, 0);
-                timeStr = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
-                matched = true;
-            } else if (text.includes("akşam")) {
-                targetDate.setHours(20, 0, 0, 0); timeStr = "20:00"; matched = true;
-            } else if (text.includes("gece")) {
-                targetDate.setHours(22, 30, 0, 0); timeStr = "22:30"; matched = true;
-            } else if (text.includes("öğlen") || text.includes("öğle")) {
-                targetDate.setHours(13, 0, 0, 0); timeStr = "13:00"; matched = true;
-            } else if (text.includes("sabah")) {
-                targetDate.setHours(9, 0, 0, 0); timeStr = "09:00"; matched = true;
-            }
-
-            if (!matched) return "Zaman belirtilmedi";
-            const day = String(targetDate.getDate()).padStart(2, '0');
-            const mo = String(targetDate.getMonth() + 1).padStart(2, '0');
-            return timeStr ? `${day}.${mo}.${targetDate.getFullYear()} ${timeStr}` : `${day}.${mo}.${targetDate.getFullYear()}`;
-        }
-
-        // GEMINI API
-        let geminiKey = localStorage.getItem('justtalk_gemini_key') || '';
-        document.getElementById('settingsBtn').addEventListener('click', () => {
-            const input = prompt("Gemini API Anahtarınızı girin:", geminiKey);
-            if (input !== null) {
-                geminiKey = input.trim();
-                localStorage.setItem('justtalk_gemini_key', geminiKey);
-                alert(geminiKey ? "API anahtarı kaydedildi." : "API anahtarı temizlendi.");
-            }
-        });
-
-        // MODAL OLAYLARI
-        const catsModal = document.getElementById('catsModal');
-        document.getElementById('catsBtn').addEventListener('click', () => { catsModal.style.display = 'flex'; });
-        document.getElementById('catsCloseBtn').addEventListener('click', () => { catsModal.style.display = 'none'; });
+        // Kategori Modalları
+        document.getElementById('catsBtn').addEventListener('click', () => { document.getElementById('catsModal').style.display = 'flex'; });
         document.getElementById('addCatBtn').addEventListener('click', async () => {
             const inp = document.getElementById('newCatInput');
             if (inp.value.trim()) { await ensureCategoryExists(inp.value.trim()); inp.value = ''; }
         });
 
-        let currentEditDocId = null;
-        const editModal = document.getElementById('editModal');
-        window.openEditModal = (id, text, time, category) => {
-            currentEditDocId = id;
+        // GÖREV MODALI
+        let currentEditId = null;
+        window.openEditModal = (id, text, time, cat) => {
+            currentEditId = id;
             document.getElementById('editTextInput').value = text;
             document.getElementById('editTimeInput').value = time;
-            ensureCategoryExists(category).then(() => {
-                document.getElementById('editCategorySelect').value = category;
-                editModal.style.display = 'flex';
-            });
+            ensureCategoryExists(cat).then(() => { document.getElementById('editCategorySelect').value = cat; document.getElementById('editModal').style.display = 'flex'; });
         };
-        document.getElementById('editCancelBtn').addEventListener('click', () => { editModal.style.display = 'none'; });
+        document.getElementById('editCancelBtn').addEventListener('click', () => { document.getElementById('editModal').style.display = 'none'; });
         document.getElementById('editSaveBtn').addEventListener('click', async () => {
-            if (!currentEditDocId) return;
-            await updateDoc(doc(db, "reminders", currentEditDocId), {
+            if (!currentEditId) return;
+            await updateDoc(doc(db, "reminders", currentEditId), {
                 text: document.getElementById('editTextInput').value.trim(),
                 time: document.getElementById('editTimeInput').value.trim() || "Zaman belirtilmedi",
                 category: document.getElementById('editCategorySelect').value
             });
-            editModal.style.display = 'none';
+            document.getElementById('editModal').style.display = 'none';
         });
 
-        // ANIMSATICI VERİ ÇEKME
-        const qReminders = query(remindersRef, orderBy("createdAt", "desc"));
-        onSnapshot(qReminders, (snap) => {
-            const list = document.getElementById('remindersList');
-            list.innerHTML = '';
-            currentRemindersData = [];
-            if (snap.empty) {
-                list.innerHTML = '<p style="text-align: center; color: var(--text-muted); margin-top: 30px;">Henüz görev yok.<br>Mikrofona dokunup söyleyebilirsin.</p>';
-                return;
-            }
+        // VERİ ÇEKME
+        onSnapshot(query(remindersRef, orderBy("createdAt", "desc")), (snap) => {
+            const list = document.getElementById('remindersList'); list.innerHTML = ''; currentRemindersData = [];
+            if (snap.empty) { list.innerHTML = '<p style="text-align: center; color: var(--text-muted); margin-top: 30px;">Görev yok.</p>'; return; }
             snap.forEach(d => {
-                const data = d.data();
-                const id = d.id;
-                currentRemindersData.push({ id, ...data });
-                const completedClass = data.completed ? 'completed' : '';
-                const cleanT = (data.text || '').replace(/'/g, "\\'");
-                const cleanTm = (data.time || '').replace(/'/g, "\\'");
-                const cleanC = (data.category || 'Genel').replace(/'/g, "\\'");
-
-                list.innerHTML += `
-                    <div class="reminder-card ${completedClass}">
-                        <div class="card-header">
-                            <span class="cat-badge">${data.category || 'Genel'}</span>
-                            <div class="card-actions">
-                                <span class="time-badge">${data.time || 'Zaman belirtilmedi'}</span>
-                                <button class="btn-card-action" style="color:#0284c7;" onclick="openEditModal('${id}', '${cleanT}', '${cleanTm}', '${cleanC}')">✏️</button>
-                                <button class="btn-card-action" style="color:#ef4444;" onclick="deleteReminder('${id}')">✕</button>
-                            </div>
-                        </div>
-                        <div class="main-text" onclick="toggleReminder('${id}', ${data.completed})">${data.text}</div>
-                    </div>
-                `;
+                const data = d.data(); const id = d.id; currentRemindersData.push({ id, ...data });
+                const comp = data.completed ? 'completed' : '';
+                list.innerHTML += `<div class="card-base ${comp}"><div class="card-header"><span class="cat-badge">${data.category||'Genel'}</span><div class="card-actions"><span class="time-badge">${data.time||'-'}</span><button class="btn-icon" style="color:var(--primary);" onclick="openEditModal('${id}','${(data.text||'').replace(/'/g,"\\'")}', '${(data.time||'').replace(/'/g,"\\'")}', '${(data.category||'Genel').replace(/'/g,"\\'")}')">✏️</button><button class="btn-icon" style="color:#ef4444;" onclick="deleteReminder('${id}')">✕</button></div></div><div class="main-text" onclick="toggleReminder('${id}', ${data.completed})">${data.text}</div></div>`;
             });
         });
+        window.toggleReminder = async (id, c) => { await updateDoc(doc(db, "reminders", id), { completed: !c }); };
+        window.deleteReminder = async (id) => { if(confirm("Sil?")) await deleteDoc(doc(db, "reminders", id)); };
 
-        window.toggleReminder = async (id, cur) => { await updateDoc(doc(db, "reminders", id), { completed: !cur }); };
-        window.deleteReminder = async (id) => { if(confirm("Görevi silmek istiyor musunuz?")) await deleteDoc(doc(db, "reminders", id)); };
+        // NOTLAR
+        document.getElementById('saveNoteBtn').addEventListener('click', async () => {
+            const t = document.getElementById('noteTitleInput').value.trim();
+            const b = document.getElementById('noteContentInput').value.trim();
+            const c = document.getElementById('noteCatSelect').value || "Genel";
+            if (!b) return alert("İçerik yazın.");
+            await addDoc(notesRef, { title: t||"Not", content: b, category: c, createdAt: serverTimestamp() });
+            document.getElementById('noteTitleInput').value = ''; document.getElementById('noteContentInput').value = '';
+        });
+        onSnapshot(query(notesRef, orderBy("createdAt", "desc")), (snap) => {
+            const list = document.getElementById('notesList'); list.innerHTML = '';
+            if (snap.empty) { list.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Not yok.</p>'; return; }
+            snap.forEach(d => {
+                const n = d.data();
+                list.innerHTML += `<div class="card-base" style="border-left-color:#f59e0b;"><div style="display:flex; justify-content:space-between; align-items:flex-start;"><div><span class="cat-badge" style="background:#fef3c7; color:#d97706;">${n.category}</span><div style="font-weight:800; font-size:1.05rem; margin-top:6px; color:var(--text-main);">${n.title}</div></div><button class="btn-icon" style="color:#ef4444;" onclick="deleteNote('${d.id}')">✕</button></div><div style="font-size:0.9rem; line-height:1.4; white-space:pre-wrap;">${n.content}</div></div>`;
+            });
+        });
+        window.deleteNote = async (id) => { if(confirm("Sil?")) await deleteDoc(doc(db, "notes", id)); };
 
-        // MİKROFON & SES AI
+        // API & AI MOTORU
+        let geminiKey = localStorage.getItem('justtalk_gemini_key') || '';
+        document.getElementById('settingsBtn').addEventListener('click', () => {
+            const input = prompt("Gemini API Anahtarınızı girin:", geminiKey);
+            if (input !== null) { geminiKey = input.trim(); localStorage.setItem('justtalk_gemini_key', geminiKey); alert(geminiKey ? "Kaydedildi." : "Silindi."); }
+        });
+
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+
+        async function callGemini(promptText) {
+            if (!geminiKey) throw new Error("API Anahtarı eksik. Lütfen '⚙️ API' butonundan ekleyin.");
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${geminiKey}`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }], generationConfig: { responseMimeType: "application/json" } })
+            });
+            const data = await res.json();
+            if (data.error) throw new Error(data.error.message);
+            return data.candidates[0].content.parts[0].text;
+        }
+
+        // AKILLI MİKROFON YÖNLENDİRİCİSİ (Intent Routing)
         const micBtn = document.getElementById('micBtn');
         const statusText = document.getElementById('statusText');
         const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
         let recognition = null;
+        
+        function resolveExactDateTime(text) {
+            const now = new Date(); let td = new Date(now); let ts = ""; let m = false; const t = text.toLowerCase();
+            if (t.includes("yarın")) { td.setDate(td.getDate() + 1); m = true; } else if (t.includes("öbür gün")) { td.setDate(td.getDate() + 2); m = true; } else if (t.includes("bugün")) { m = true; }
+            const hm = t.match(/saat\s*(\d{1,2})(?::(\d{2}))?/);
+            if (hm) { td.setHours(parseInt(hm[1]), hm[2]?parseInt(hm[2]):0, 0, 0); ts = `${String(td.getHours()).padStart(2,'0')}:${String(td.getMinutes()).padStart(2,'0')}`; m = true; }
+            else if (t.includes("akşam")) { td.setHours(20,0,0,0); ts = "20:00"; m = true; } else if (t.includes("sabah")) { td.setHours(9,0,0,0); ts = "09:00"; m = true; }
+            if (!m) return "Zaman belirtilmedi";
+            return ts ? `${String(td.getDate()).padStart(2,'0')}.${String(td.getMonth()+1).padStart(2,'0')}.${td.getFullYear()} ${ts}` : `${String(td.getDate()).padStart(2,'0')}.${String(td.getMonth()+1).padStart(2,'0')}.${td.getFullYear()}`;
+        }
 
         if (SpeechRec) {
-            recognition = new SpeechRec();
-            recognition.lang = 'tr-TR';
-            recognition.onstart = () => { micBtn.className = 'fab-mic listening'; statusText.innerText = "Dinleniyor..."; };
+            recognition = new SpeechRec(); recognition.lang = 'tr-TR';
+            recognition.onstart = () => { micBtn.className = 'fab-mic listening'; statusText.innerText = "Sizi dinliyorum..."; };
             recognition.onend = () => { micBtn.className = 'fab-mic'; statusText.innerText = ""; };
             recognition.onresult = async (e) => {
                 const transcript = e.results[0][0].transcript;
-                micBtn.className = 'fab-mic thinking';
-                statusText.innerText = "İşleniyor...";
+                micBtn.className = 'fab-mic thinking'; statusText.innerText = "Yapay Zeka Karar Veriyor...";
+                
+                try {
+                    const prompt = `Kullanıcı komutu: "${transcript}".
+Senin görevin kullanıcının ne istediğini anlamak.
+Eğer kullanıcı bir hatırlatıcı veya görev eklemek istiyorsa (Örnek: "yarın süt al", "bunu listeye ekle", "akşam ders çalışacağım"):
+{"intent": "reminder", "task": "yapılacak iş (zaman zarflarını metinden temizle)", "category": "kategori adı", "chat_response": ""}
 
-                const calculatedTime = resolveExactDateTime(transcript);
-                let taskText = transcript;
-                let finalCategory = "Genel";
+Eğer kullanıcı genel bir soru soruyorsa, sohbet ediyorsa veya bilgi istiyorsa (Örnek: "hava nasıl?", "bana şiir yaz", "nasılsın?"):
+{"intent": "chat", "task": "", "category": "", "chat_response": "Kullanıcıya vereceğin samimi ve doğrudan yanıt."}
 
-                if (geminiKey) {
-                    try {
-                        const prompt = `Komut: "${transcript}". Kategoriler: ${savedCategories.join(", ")}. SADECE JSON formatı ver: {"task": "asıl iş", "category": "kategori adı"}`;
-                        // API BURADA GÜNCELLENDİ (gemini-3.6-flash)
-                        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${geminiKey}`, {
-                            method: 'POST', headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { responseMimeType: "application/json" } })
-                        });
-                        const data = await res.json();
-                        if (!data.error) {
-                            let raw = data.candidates[0].content.parts[0].text.trim();
-                            const parsed = JSON.parse(raw);
-                            if (parsed.task) taskText = parsed.task;
-                            if (parsed.category) finalCategory = parsed.category;
-                        }
-                    } catch (err) { console.warn("AI hatası:", err); }
+SADECE geçerli bir JSON döndür. Başka metin ekleme. Mevcut kategoriler: ${savedCategories.join(", ")}`;
+                    
+                    let rawJson = await callGemini(prompt);
+                    rawJson = rawJson.replace(/```json/g, '').replace(/```/g, '').trim();
+                    const aiResult = JSON.parse(rawJson);
+
+                    if (aiResult.intent === "chat") {
+                        // CHAT SEKMESİNE YÖNLENDİR
+                        switchTab('chat');
+                        chatMessages.innerHTML += `<div class="chat-bubble bubble-user">${transcript}</div>`;
+                        chatMessages.innerHTML += `<div class="chat-bubble bubble-ai">${aiResult.chat_response}</div>`;
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    } else {
+                        // GÖREVLERE EKLE
+                        const calculatedTime = resolveExactDateTime(transcript);
+                        const finalCategory = await ensureCategoryExists(aiResult.category || "Genel");
+                        await addDoc(remindersRef, { text: aiResult.task, time: calculatedTime, category: finalCategory, completed: false, createdAt: serverTimestamp() });
+                        statusText.innerText = "Görev eklendi!";
+                        setTimeout(() => statusText.innerText = "", 2000);
+                    }
+                } catch (err) {
+                    console.warn("AI Karar Hatası:", err);
+                    // AI çuvallarsa varsayılan olarak görev ekle
+                    const calculatedTime = resolveExactDateTime(transcript);
+                    let taskText = transcript.replace(/\b(yarın|bugün|öbür gün|akşam|sabah|gece|öğlen|saat\s*\d{1,2}(?::\d{2})?)\b/gi, '').replace(/\s{2,}/g, ' ').trim();
+                    await addDoc(remindersRef, { text: taskText || transcript, time: calculatedTime, category: "Genel", completed: false, createdAt: serverTimestamp() });
                 }
-
-                if (finalCategory === "Genel") {
-                    const catMatch = transcript.match(/([a-zA-ZçğıöşüÇĞİÖŞÜ0-9\s]+?)\s*(?:kategorisi olarak|kategorisine|kategorisi yap|kategorisi)/i);
-                    if (catMatch && catMatch[1]) { finalCategory = catMatch[1].trim(); taskText = taskText.replace(catMatch[0], '').trim(); }
-                }
-
-                taskText = taskText.replace(/\b(yarın|bugün|öbür gün|akşam|sabah|gece|öğlen|saat\s*\d{1,2}(?::\d{2})?)\b/gi, '').replace(/\s{2,}/g, ' ').trim();
-                taskText = taskText ? (taskText.charAt(0).toUpperCase() + taskText.slice(1)) : transcript;
-                finalCategory = await ensureCategoryExists(finalCategory);
-
-                await addDoc(remindersRef, { text: taskText, time: calculatedTime, category: finalCategory, completed: false, createdAt: serverTimestamp() });
-                micBtn.className = 'fab-mic'; statusText.innerText = "";
+                micBtn.className = 'fab-mic';
             };
         }
-        micBtn.addEventListener('click', () => { if (!recognition) return; try { recognition.start(); } catch(err) { recognition.stop(); } });
+        micBtn.addEventListener('click', () => { if(recognition) { try{ recognition.start(); }catch(e){ recognition.stop(); } } });
 
-        // NOTLAR BÖLÜMÜ (Kategori Select Eklendi)
-        document.getElementById('saveNoteBtn').addEventListener('click', async () => {
-            const title = document.getElementById('noteTitleInput').value.trim();
-            const body = document.getElementById('noteContentInput').value.trim();
-            // Artık açılır menüden alıyoruz
-            const cat = document.getElementById('noteCatSelect').value || "Genel";
-
-            if (!body) { alert("Lütfen not içeriğini yazın."); return; }
-
-            await addDoc(notesRef, { title: title || "Not", content: body, category: cat, createdAt: serverTimestamp() });
-            document.getElementById('noteTitleInput').value = '';
-            document.getElementById('noteContentInput').value = '';
-        });
-
-        const qNotes = query(notesRef, orderBy("createdAt", "desc"));
-        onSnapshot(qNotes, (snap) => {
-            const list = document.getElementById('notesList');
-            list.innerHTML = '';
-            if (snap.empty) {
-                list.innerHTML = '<p style="text-align: center; color: var(--text-muted); margin-top: 20px;">Henüz not eklenmedi.</p>';
-                return;
-            }
-            snap.forEach(d => {
-                const n = d.data();
-                const id = d.id;
-                list.innerHTML += `
-                    <div class="note-card">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                            <div>
-                                <span class="cat-badge" style="background:#ffedd5; color:#c2410c;">${n.category}</span>
-                                <div class="note-title" style="margin-top: 4px;">${n.title}</div>
-                            </div>
-                            <button class="btn-card-action" style="color:#ef4444;" onclick="deleteNote('${id}')">✕</button>
-                        </div>
-                        <div class="note-body">${n.content}</div>
-                    </div>
-                `;
-            });
-        });
-        window.deleteNote = async (id) => { if(confirm("Notu silmek istiyor musunuz?")) await deleteDoc(doc(db, "notes", id)); };
-
-        // SOHBET (CHAT) - API GÜNCELLENDİ
-        const chatSendBtn = document.getElementById('chatSendBtn');
-        const chatInput = document.getElementById('chatInput');
-        const chatMessages = document.getElementById('chatMessages');
-
+        // CHAT (SOHBET) GÖNDERME
         async function sendChatMessage() {
-            const msg = chatInput.value.trim();
-            if (!msg) return;
-
+            const msg = chatInput.value.trim(); if (!msg) return;
             chatMessages.innerHTML += `<div class="chat-bubble bubble-user">${msg}</div>`;
-            chatInput.value = '';
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-
-            if (!geminiKey) {
-                chatMessages.innerHTML += `<div class="chat-bubble bubble-ai">Lütfen Ayarlar <b>⚙️ API</b> bölümünden anahtarınızı ekleyin.</div>`;
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-                return;
-            }
-
-            const aiBubbleId = 'ai-resp-' + Date.now();
-            chatMessages.innerHTML += `<div id="${aiBubbleId}" class="chat-bubble bubble-ai" style="opacity: 0.6;">Gemini 3.6 Flash yanıtlıyor...</div>`;
+            chatInput.value = ''; chatMessages.scrollTop = chatMessages.scrollHeight;
+            const bubbleId = 'ai-' + Date.now();
+            chatMessages.innerHTML += `<div id="${bubbleId}" class="chat-bubble bubble-ai" style="opacity:0.6;">Düşünüyor...</div>`;
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
             try {
-                const remindersContext = currentRemindersData.map(r => `- ${r.text} (Zaman: ${r.time}, Kategori: ${r.category})`).join("\n");
-                const prompt = `Sen Efehan'ın kişisel asistanısın. Görevleri: \n${remindersContext || 'Görev yok'}\n\nSoru: "${msg}"`;
-
-                // API BURADA DA GÜNCELLENDİ (gemini-3.6-flash)
-                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${geminiKey}`, {
-                    method: 'POST', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-                });
-
-                const data = await res.json();
-                const bubbleEl = document.getElementById(aiBubbleId);
-                bubbleEl.style.opacity = '1';
-
-                if (data.error) {
-                    bubbleEl.innerText = "Hata: " + data.error.message;
-                } else {
-                    bubbleEl.innerText = data.candidates[0].content.parts[0].text;
-                }
+                const tasksCtx = currentRemindersData.map(r => `- ${r.text} (${r.time})`).join("\n");
+                const p = `Sen Efehan'ın kişisel asistanısın. Görevleri: \n${tasksCtx || 'Yok'}\nSoru: "${msg}"`;
+                const ans = await callGemini(p);
+                const el = document.getElementById(bubbleId); el.style.opacity = '1'; el.innerText = ans;
             } catch (err) {
-                const bubbleEl = document.getElementById(aiBubbleId);
-                bubbleEl.style.color = '#ef4444';
-                bubbleEl.innerText = "Bağlantı hatası oluştu: " + err.message;
+                const el = document.getElementById(bubbleId); el.style.opacity = '1'; el.style.color = '#ef4444'; el.innerText = err.message;
             }
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
-
-        chatSendBtn.addEventListener('click', sendChatMessage);
+        document.getElementById('chatSendBtn').addEventListener('click', sendChatMessage);
         chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendChatMessage(); });
     </script>
 </body>
 </html>
-
