@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -17,8 +16,10 @@
             padding: 16px;
         }
         header {
-            text-align: center;
-            padding: 20px 0 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 4px 6px 4px;
         }
         h1 {
             font-size: 1.8rem;
@@ -27,7 +28,20 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        .btn-settings {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #1e293b;
+            color: #94a3b8;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
         #statusText {
+            text-align: center;
             font-size: 0.85rem;
             color: #c084fc;
             min-height: 20px;
@@ -134,8 +148,9 @@
 <body>
     <header>
         <h1>JustTalk AI</h1>
-        <div id="statusText"></div>
+        <button id="settingsBtn" class="btn-settings" type="button">⚙️ API Ayarı</button>
     </header>
+    <div id="statusText"></div>
 
     <div id="remindersList">
         <p style="text-align: center; color: #64748b; margin-top: 30px;">Kayıtlar yükleniyor...</p>
@@ -170,11 +185,22 @@
         const remindersRef = collection(db, "reminders");
         const q = query(remindersRef, orderBy("createdAt", "desc"));
 
-        const GEMINI_API_KEY = "AQ.Ab8RN6LItTWeUweYOBqGEUxYAaxsYSXiX6RxLx_5ZUHM22bEYA";
-
         const micBtn = document.getElementById('micBtn');
         const list = document.getElementById('remindersList');
         const statusText = document.getElementById('statusText');
+        const settingsBtn = document.getElementById('settingsBtn');
+
+        // Gemini Anahtarını LocalStorage'dan al
+        let geminiKey = localStorage.getItem('justtalk_gemini_key') || '';
+
+        settingsBtn.addEventListener('click', () => {
+            const input = prompt("Gemini API Anahtarını Yapıştır:", geminiKey);
+            if (input !== null) {
+                geminiKey = input.trim();
+                localStorage.setItem('justtalk_gemini_key', geminiKey);
+                alert(geminiKey ? "API anahtarı cihazına kaydedildi!" : "API anahtarı temizlendi.");
+            }
+        });
 
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         let recognition = null;
@@ -204,17 +230,25 @@
 
             recognition.onresult = async (event) => {
                 const transcript = event.results[0][0].transcript;
+
+                if (!geminiKey) {
+                    alert("Lütfen sağ üstteki '⚙️ API Ayarı' butonuna tıklayarak Gemini API anahtarınızı girin.");
+                    statusText.innerText = "";
+                    micBtn.className = '';
+                    return;
+                }
+
                 micBtn.className = 'thinking';
                 statusText.innerText = "Yapay zeka ayrıştırıyor...";
 
                 try {
-                    const prompt = `Aşağıdaki kullanıcı komutunu anla. SADECE geçerli bir JSON döndür. Başka hiçbir metin veya markdown bloğu yazma.
+                    const prompt = `Aşağıdaki kullanıcı komutunu anla. SADECE geçerli bir JSON döndür. Markdown bloğu veya ekstra metin ekleme.
 Format:
-{"text": "yapılacak ana iş", "time": "bahsedilen saat veya gün", "category": "kullanıcı belirttiyse o kategori, belirtmediyse bağlama en uygun kısa kategori"}
+{"text": "yapılacak ana iş", "time": "bahsedilen saat veya gün", "category": "kullanıcının söylediği özel kategori ya da bağlama en uygun kısa kategori"}
 
-Kullanıcı sözü: "${transcript}"`;
+Kullanıcı komutu: "${transcript}"`;
 
-                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
@@ -224,6 +258,11 @@ Kullanıcı sözü: "${transcript}"`;
                     });
 
                     const aiData = await response.json();
+                    
+                    if (aiData.error) {
+                        throw new Error(aiData.error.message);
+                    }
+
                     let aiText = aiData.candidates[0].content.parts[0].text;
                     const parsed = JSON.parse(aiText);
 
@@ -236,15 +275,9 @@ Kullanıcı sözü: "${transcript}"`;
                     });
                     statusText.innerText = "";
                 } catch (err) {
-                    console.error("Hata:", err);
-                    statusText.innerText = "Analiz yapılamadı, doğrudan kaydediliyor...";
-                    await addDoc(remindersRef, {
-                        text: transcript,
-                        time: "Zaman belirtilmedi",
-                        category: "Genel",
-                        completed: false,
-                        createdAt: serverTimestamp()
-                    });
+                    console.error("Yapay Zeka Hatası:", err);
+                    alert("Yapay zeka analiz hatası: " + err.message);
+                    statusText.innerText = "Hata oluştu.";
                 } finally {
                     micBtn.className = '';
                 }
@@ -255,7 +288,7 @@ Kullanıcı sözü: "${transcript}"`;
 
         micBtn.addEventListener('click', () => {
             if (!recognition) {
-                alert("Tarayıcınız ses özelliğini desteklemiyor. Lütfen Safari üzerinden açın.");
+                alert("Tarayıcınız ses tanımayı desteklemiyor. Lütfen Safari üzerinden açın.");
                 return;
             }
             try {
@@ -303,4 +336,6 @@ Kullanıcı sözü: "${transcript}"`;
     </script>
 </body>
 </html>
+
+
 
