@@ -7,63 +7,56 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
-        /* 1. LIGHT TEMA (Klasik Mavi/Aydınlık) */
+        /* TEMA DEĞİŞKENLERİ: Mod ve Renk Birbirinden Bağımsızdır */
+        
+        /* 1. Görünüm Modu: Aydınlık (Varsayılan) */
         :root {
             --bg-main: #f8fafc; --bg-card: #ffffff; --text-main: #1e293b; --text-muted: #64748b;
-            --primary: #2563eb; --primary-hover: #1d4ed8; --accent: #e0f2fe; --accent-text: #0369a1;
-            --header-bg: #ffffff; --border-color: #e2e8f0; --card-shadow: rgba(15,23,42,0.05);
-            --completed-bg: #f1f5f9; --nav-bg: #ffffff; --chat-user: #2563eb; --chat-ai: #ffffff;
+            --header-bg: #ffffff; --border-color: #e2e8f0; --card-shadow: rgba(15, 23, 42, 0.04);
+            --completed-bg: #f1f5f9; --nav-bg: #ffffff; --modal-bg: #ffffff; --modal-overlay: rgba(15, 23, 42, 0.4);
+            
+            /* Varsayılan Renk: Mavi */
+            --primary: #2563eb; --primary-hover: #1d4ed8; --accent: #dbeafe; --accent-text: #1e40af;
         }
-        /* 2. DARK TEMA (Gece Mavisi) */
-        [data-theme="dark"] {
-            --bg-main: #0d1527; --bg-card: #131f37; --text-main: #f1f5f9; --text-muted: #94a3b8;
-            --primary: #0284c7; --primary-hover: #0369a1; --accent: #1e2e4f; --accent-text: #7dd3fc;
-            --header-bg: #0d1527; --border-color: #223254; --card-shadow: rgba(0,0,0,0.3);
-            --completed-bg: #0f172a; --nav-bg: #0d1527; --chat-user: #0284c7; --chat-ai: #131f37;
+
+        /* 1. Görünüm Modu: Karanlık */
+        [data-theme-mode="dark"] {
+            --bg-main: #0f172a; --bg-card: #1e293b; --text-main: #f1f5f9; --text-muted: #94a3b8;
+            --header-bg: #1e293b; --border-color: #334155; --card-shadow: rgba(0, 0, 0, 0.25);
+            --completed-bg: #0f172a; --nav-bg: #1e293b; --modal-bg: #1e293b; --modal-overlay: rgba(0, 0, 0, 0.7);
         }
-        /* 3. SUNSET TEMA (Canlı Turuncu & Kırmızı) */
-        [data-theme="sunset"] {
-            --bg-main: #fff7ed; --bg-card: #ffffff; --text-main: #431407; --text-muted: #9a3412;
-            --primary: #ea580c; --primary-hover: #c2410c; --accent: #ffedd5; --accent-text: #c2410c;
-            --header-bg: #ffffff; --border-color: #fed7aa; --card-shadow: rgba(234,88,12,0.08);
-            --completed-bg: #fff7ed; --nav-bg: #ffffff; --chat-user: #ea580c; --chat-ai: #ffffff;
-        }
-        /* 4. FOREST TEMA (Doğal Yeşil Tonları) */
-        [data-theme="forest"] {
-            --bg-main: #f0fdf4; --bg-card: #ffffff; --text-main: #14532d; --text-muted: #166534;
-            --primary: #16a34a; --primary-hover: #15803d; --accent: #dcfce7; --accent-text: #15803d;
-            --header-bg: #ffffff; --border-color: #bbf7d0; --card-shadow: rgba(22,163,74,0.08);
-            --completed-bg: #f0fdf4; --nav-bg: #ffffff; --chat-user: #16a34a; --chat-ai: #ffffff;
-        }
-        /* 5. BERRY TEMA (Tatlı Mor & Pembe) */
-        [data-theme="berry"] {
-            --bg-main: #faf5ff; --bg-card: #ffffff; --text-main: #4c1d95; --text-muted: #6d28d9;
-            --primary: #9333ea; --primary-hover: #7e22ce; --accent: #f3e8ff; --accent-text: #7e22ce;
-            --header-bg: #ffffff; --border-color: #e9d5ff; --card-shadow: rgba(147,51,234,0.08);
-            --completed-bg: #faf5ff; --nav-bg: #ffffff; --chat-user: #9333ea; --chat-ai: #ffffff;
-        }
-        /* 6. COFFEE TEMA (Krem & Kahverengi) */
-        [data-theme="coffee"] {
-            --bg-main: #fdf8f6; --bg-card: #ffffff; --text-main: #451a03; --text-muted: #78350f;
-            --primary: #92400e; --primary-hover: #78350f; --accent: #ffedd5; --accent-text: #92400e;
-            --header-bg: #ffffff; --border-color: #fed7aa; --card-shadow: rgba(146,64,14,0.08);
-            --completed-bg: #fdf8f6; --nav-bg: #ffffff; --chat-user: #92400e; --chat-ai: #ffffff;
-        }
+
+        /* 2. Renk Temaları (Aydınlık Mod İçin Tonlar) */
+        [data-theme-color="orange"] { --primary: #ea580c; --primary-hover: #c2410c; --accent: #ffedd5; --accent-text: #9a3412; }
+        [data-theme-color="green"] { --primary: #16a34a; --primary-hover: #15803d; --accent: #dcfce7; --accent-text: #14532d; }
+        [data-theme-color="purple"] { --primary: #9333ea; --primary-hover: #7e22ce; --accent: #f3e8ff; --accent-text: #581c87; }
+        [data-theme-color="pink"] { --primary: #db2777; --primary-hover: #be185d; --accent: #fce7f3; --accent-text: #831843; }
+        [data-theme-color="coffee"] { --primary: #92400e; --primary-hover: #78350f; --accent: #fef3c7; --accent-text: #78350f; }
+
+        /* 2. Renk Temaları (Karanlık Mod İçin Uyarlanmış Tonlar) */
+        [data-theme-mode="dark"][data-theme-color="blue"] { --primary: #3b82f6; --accent: #1e3a8a; --accent-text: #bfdbfe; }
+        [data-theme-mode="dark"][data-theme-color="orange"] { --primary: #f97316; --accent: #7c2d12; --accent-text: #fdba74; }
+        [data-theme-mode="dark"][data-theme-color="green"] { --primary: #22c55e; --accent: #14532d; --accent-text: #86efac; }
+        [data-theme-mode="dark"][data-theme-color="purple"] { --primary: #a855f7; --accent: #4c1d95; --accent-text: #d8b4fe; }
+        [data-theme-mode="dark"][data-theme-color="pink"] { --primary: #ec4899; --accent: #831843; --accent-text: #f9a8d4; }
+        [data-theme-mode="dark"][data-theme-color="coffee"] { --primary: #b45309; --accent: #451a03; --accent-text: #fcd34d; }
 
         body {
             background-color: var(--bg-main); color: var(--text-main);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             display: flex; flex-direction: column; height: 100vh; overflow: hidden;
-            transition: background-color 0.4s ease, color 0.4s ease;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
+
         header {
             display: flex; justify-content: space-between; align-items: center; padding: 14px 18px;
             background-color: var(--header-bg); border-bottom: 1px solid var(--border-color);
-            flex-shrink: 0; transition: background-color 0.4s ease;
+            flex-shrink: 0; transition: background-color 0.3s ease;
         }
         .header-left { display: flex; flex-direction: column; gap: 2px; }
-        .clock-time { font-size: 1.25rem; font-weight: 800; color: var(--primary); letter-spacing: -0.5px; }
+        .clock-time { font-size: 1.25rem; font-weight: 800; color: var(--primary); letter-spacing: -0.5px; transition: color 0.3s ease; }
         .clock-date { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; }
+        
         .header-right { display: flex; align-items: center; gap: 10px; }
         .brand-wrap { text-align: right; }
         h1 { font-size: 1.2rem; font-weight: 900; color: var(--text-main); }
@@ -72,6 +65,7 @@
         .btn-top {
             background-color: var(--completed-bg); border: 1px solid var(--border-color); color: var(--text-main);
             padding: 6px 10px; border-radius: 10px; font-size: 1.1rem; cursor: pointer; transition: all 0.2s;
+            display: flex; align-items: center; justify-content: center;
         }
         .btn-top:active { background-color: var(--primary); color: #fff; border-color: var(--primary); }
         .btn-text { font-size: 0.8rem; font-weight: 700; padding: 6px 12px; }
@@ -95,10 +89,11 @@
         .card-base.completed .main-text { text-decoration: line-through; color: var(--text-muted); }
         
         .card-header { display: flex; justify-content: space-between; align-items: center; }
-        .cat-badge { background-color: var(--accent); color: var(--accent-text); font-size: 0.72rem; font-weight: 800; padding: 4px 10px; border-radius: 8px; }
+        .cat-badge { background-color: var(--accent); color: var(--accent-text); font-size: 0.72rem; font-weight: 800; padding: 4px 10px; border-radius: 8px; transition: all 0.3s ease; }
         .time-badge { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; padding: 2px 6px; }
         .card-actions { display: flex; align-items: center; gap: 6px; }
-        .btn-icon { background: var(--completed-bg); border: 1px solid var(--border-color); border-radius: 8px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.85rem; }
+        .btn-icon { background: var(--completed-bg); border: 1px solid var(--border-color); border-radius: 8px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.85rem; transition: background 0.15s; }
+        .btn-icon:active { background-color: var(--border-color); }
         .main-text { font-size: 1rem; font-weight: 600; color: var(--text-main); cursor: pointer; line-height: 1.4; }
 
         /* Yüzen Mikrofon */
@@ -113,22 +108,22 @@
         .fab-mic.thinking { background-color: #8b5cf6 !important; border-color: #c4b5fd !important; }
         @keyframes pulseFab { 0% { transform: scale(0.95); } 50% { transform: scale(1.05); } 100% { transform: scale(0.95); } }
 
-        /* Notlar ve Formlar */
-        .input-base { background-color: var(--bg-main); border: 1px solid var(--border-color); border-radius: 10px; padding: 10px 12px; font-size: 0.95rem; color: var(--text-main); outline: none; width: 100%; font-weight: 500; }
+        /* Form Elemanları */
+        .input-base { background-color: var(--bg-main); border: 1px solid var(--border-color); border-radius: 10px; padding: 10px 12px; font-size: 0.95rem; color: var(--text-main); outline: none; width: 100%; font-weight: 500; transition: border-color 0.2s; }
         .input-base:focus { border-color: var(--primary); }
 
-        /* Sohbet (Chat) Sekmesi */
+        /* Sohbet Sekmesi */
         .chat-container { display: flex; flex-direction: column; height: 100%; }
         .chat-messages { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-bottom: 12px; }
         .chat-bubble { max-width: 85%; padding: 12px 16px; border-radius: 16px; font-size: 0.95rem; line-height: 1.5; font-weight: 500; }
-        .bubble-user { align-self: flex-end; background-color: var(--chat-user); color: #fff; border-bottom-right-radius: 4px; }
-        .bubble-ai { align-self: flex-start; background-color: var(--chat-ai); color: var(--text-main); border: 1px solid var(--border-color); border-bottom-left-radius: 4px; box-shadow: 0 4px 10px var(--card-shadow); }
+        .bubble-user { align-self: flex-end; background-color: var(--primary); color: #fff; border-bottom-right-radius: 4px; transition: background-color 0.3s; }
+        .bubble-ai { align-self: flex-start; background-color: var(--bg-card); color: var(--text-main); border: 1px solid var(--border-color); border-bottom-left-radius: 4px; box-shadow: 0 4px 10px var(--card-shadow); }
         .chat-input-bar { display: flex; gap: 8px; padding-top: 10px; border-top: 1px solid var(--border-color); background-color: var(--bg-main); }
 
         /* Alt Navigasyon Barı */
         nav.bottom-nav {
             display: flex; background-color: var(--nav-bg); border-top: 1px solid var(--border-color);
-            padding: 8px 12px 20px 12px; justify-content: space-around; flex-shrink: 0; box-shadow: 0 -4px 12px var(--card-shadow);
+            padding: 8px 12px 20px 12px; justify-content: space-around; flex-shrink: 0; box-shadow: 0 -4px 12px var(--card-shadow); transition: background-color 0.3s;
         }
         .nav-item {
             display: flex; flex-direction: column; align-items: center; background: none; border: none;
@@ -138,16 +133,16 @@
         .nav-item.active { color: var(--primary); background-color: var(--accent); }
         .nav-item svg { width: 22px; height: 22px; }
 
-        /* Modallar */
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.5); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; padding: 16px; z-index: 100; }
-        .modal-box { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; width: 100%; max-width: 420px; padding: 22px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        /* Modallar ve Temalar */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--modal-overlay); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; padding: 16px; z-index: 100; transition: background-color 0.3s; }
+        .modal-box { background-color: var(--modal-bg); border: 1px solid var(--border-color); border-radius: 20px; width: 100%; max-width: 420px; padding: 22px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); transition: background-color 0.3s; }
         .modal-title { font-size: 1.15rem; font-weight: 900; color: var(--text-main); }
-        .btn-primary { background-color: var(--primary); color: #fff; border: none; padding: 10px 16px; border-radius: 10px; font-weight: 700; cursor: pointer; }
-        .btn-secondary { background-color: var(--completed-bg); color: var(--text-main); border: 1px solid var(--border-color); padding: 10px 16px; border-radius: 10px; font-weight: 700; cursor: pointer; }
-
-        /* Tema Seçici Butonları */
-        .theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .theme-btn { padding: 12px; border-radius: 12px; border: 2px solid transparent; font-weight: 700; cursor: pointer; text-align: center; }
+        .btn-primary { background-color: var(--primary); color: #fff; border: none; padding: 10px 16px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: background-color 0.3s; }
+        .btn-secondary { background-color: var(--completed-bg); color: var(--text-main); border: 1px solid var(--border-color); padding: 10px 16px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: all 0.3s; }
+        
+        .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .color-btn { height: 44px; border-radius: 12px; border: 2px solid transparent; cursor: pointer; transition: transform 0.1s; }
+        .color-btn:active { transform: scale(0.9); }
     </style>
 </head>
 <body>
@@ -194,12 +189,12 @@
         <!-- 2. SEKME: NOTLAR -->
         <div id="tabNotes" class="tab-view">
             <span class="section-title" style="margin-bottom: 12px;">Hızlı Not Defteri</span>
-            <div class="card-base" style="border-left-color: #f59e0b; padding: 16px;">
+            <div class="card-base" style="padding: 16px;">
                 <input type="text" id="noteTitleInput" class="input-base" placeholder="Not Başlığı (örn: Fikirler)">
                 <textarea id="noteContentInput" class="input-base" rows="3" placeholder="Notunuzu buraya yazın..."></textarea>
                 <div style="display: flex; gap: 8px;">
                     <select id="noteCatSelect" class="input-base" style="flex: 1;"></select>
-                    <button id="saveNoteBtn" class="btn-primary" style="background-color: #f59e0b; color:#fff;">Kaydet</button>
+                    <button id="saveNoteBtn" class="btn-primary">Kaydet</button>
                 </div>
             </div>
             <div id="notesList" class="cards-list" style="margin-top: 16px;">
@@ -212,7 +207,7 @@
             <div class="chat-container">
                 <div id="chatMessages" class="chat-messages">
                     <div class="chat-bubble bubble-ai">
-                        Merhaba Efehan! Mikrofona dokunarak "Yarın hava nasıl?" gibi sorular sorabilir veya doğrudan buradan yazabilirsin. Yeni görev atamalarını da sesli yapabilirsin, ben cümleni anlayıp doğru sekmeye yönlendireceğim!
+                        Merhaba Efehan! Mikrofona dokunarak görev atayabilir ya da sorular sorabilirsin. Ben cümleyi anlayıp doğru alana yönlendireceğim.
                     </div>
                 </div>
                 <div class="chat-input-bar">
@@ -239,19 +234,34 @@
         </button>
     </nav>
 
-    <!-- TEMA MODALI -->
+    <!-- AYRIŞTIRILMIŞ TEMA MODALI -->
     <div id="themeModal" class="modal-overlay">
         <div class="modal-box">
-            <div class="modal-title">Tema Seçimi</div>
-            <div class="theme-grid">
-                <button class="theme-btn" style="background:#f8fafc; color:#1e293b; border-color:#2563eb;" onclick="setTheme('light')">Klasik Mavi ☀️</button>
-                <button class="theme-btn" style="background:#0d1527; color:#f1f5f9; border-color:#0284c7;" onclick="setTheme('dark')">Gece Mavisi 🌙</button>
-                <button class="theme-btn" style="background:#fff7ed; color:#431407; border-color:#ea580c;" onclick="setTheme('sunset')">Gün Batımı 🌅</button>
-                <button class="theme-btn" style="background:#f0fdf4; color:#14532d; border-color:#16a34a;" onclick="setTheme('forest')">Doğal Yeşil 🌲</button>
-                <button class="theme-btn" style="background:#faf5ff; color:#4c1d95; border-color:#9333ea;" onclick="setTheme('berry')">Tatlı Mor 🍇</button>
-                <button class="theme-btn" style="background:#fdf8f6; color:#451a03; border-color:#92400e;" onclick="setTheme('coffee')">Kahve & Krem ☕</button>
+            <div class="modal-title">Görünüm ve Tema Ayarları</div>
+            
+            <div style="display:flex; flex-direction:column; gap:6px;">
+                <label style="font-size:0.8rem; color:var(--text-muted); font-weight:700;">1. Görünüm Modu</label>
+                <div style="display:flex; gap:8px;">
+                    <button class="btn-secondary" style="flex:1;" onclick="setMode('light')">☀️ Aydınlık</button>
+                    <button class="btn-secondary" style="flex:1;" onclick="setMode('dark')">🌙 Karanlık</button>
+                </div>
             </div>
-            <div class="modal-actions"><button class="btn-secondary" onclick="document.getElementById('themeModal').style.display='none'">Kapat</button></div>
+
+            <div style="display:flex; flex-direction:column; gap:6px; margin-top:8px;">
+                <label style="font-size:0.8rem; color:var(--text-muted); font-weight:700;">2. Renk Teması</label>
+                <div class="theme-grid">
+                    <button class="color-btn" style="background:#3b82f6;" onclick="setColor('blue')"></button>
+                    <button class="color-btn" style="background:#f97316;" onclick="setColor('orange')"></button>
+                    <button class="color-btn" style="background:#22c55e;" onclick="setColor('green')"></button>
+                    <button class="color-btn" style="background:#a855f7;" onclick="setColor('purple')"></button>
+                    <button class="color-btn" style="background:#ec4899;" onclick="setColor('pink')"></button>
+                    <button class="color-btn" style="background:#b45309;" onclick="setColor('coffee')"></button>
+                </div>
+            </div>
+
+            <div class="modal-actions" style="margin-top: 10px;">
+                <button class="btn-secondary" onclick="document.getElementById('themeModal').style.display='none'">Kapat</button>
+            </div>
         </div>
     </div>
 
@@ -291,18 +301,23 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, deleteDoc, doc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
 
-        // TEMALAR
-        const savedTheme = localStorage.getItem('justtalk_theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
+        // GÖRÜNÜM VE RENK MOTORU
+        const savedMode = localStorage.getItem('justtalk_mode') || 'light';
+        const savedColor = localStorage.getItem('justtalk_color') || 'blue';
+        document.documentElement.setAttribute('data-theme-mode', savedMode);
+        document.documentElement.setAttribute('data-theme-color', savedColor);
         
-        window.setTheme = (themeName) => {
-            document.documentElement.setAttribute('data-theme', themeName);
-            localStorage.setItem('justtalk_theme', themeName);
-            document.getElementById('themeModal').style.display = 'none';
+        window.setMode = (mode) => {
+            document.documentElement.setAttribute('data-theme-mode', mode);
+            localStorage.setItem('justtalk_mode', mode);
+        };
+        window.setColor = (color) => {
+            document.documentElement.setAttribute('data-theme-color', color);
+            localStorage.setItem('justtalk_color', color);
         };
         document.getElementById('themeMenuBtn').addEventListener('click', () => { document.getElementById('themeModal').style.display = 'flex'; });
 
-        // FIREBASE
+        // FIREBASE KURULUMU
         const firebaseConfig = {
             apiKey: "AIzaSyD4ZwCI4_e1D8bWfigQ4MAozrC5ZaDDv9A",
             authDomain: "justtalk-ce472.firebaseapp.com",
@@ -334,7 +349,7 @@
             }
         };
 
-        // SAAT & KATEGORİ
+        // SAAT VE TARİH
         function updateClock() {
             const now = new Date();
             document.getElementById('clockTime').innerText = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
@@ -344,6 +359,7 @@
         }
         setInterval(updateClock, 1000); updateClock();
 
+        // KATEGORİ SENKRONİZASYONU
         let savedCategories = ["Genel", "Okumak", "Ders", "İş", "Kişisel", "Alışveriş"];
         onSnapshot(categoriesRef, (snap) => {
             snap.forEach(d => { const n = d.data().name; if (n && !savedCategories.includes(n)) savedCategories.push(n); });
@@ -381,14 +397,13 @@
             });
         }
 
-        // Kategori Modalları
         document.getElementById('catsBtn').addEventListener('click', () => { document.getElementById('catsModal').style.display = 'flex'; });
         document.getElementById('addCatBtn').addEventListener('click', async () => {
             const inp = document.getElementById('newCatInput');
             if (inp.value.trim()) { await ensureCategoryExists(inp.value.trim()); inp.value = ''; }
         });
 
-        // GÖREV MODALI
+        // GÖREV MODALI İŞLEMLERİ
         let currentEditId = null;
         window.openEditModal = (id, text, time, cat) => {
             currentEditId = id;
@@ -407,7 +422,7 @@
             document.getElementById('editModal').style.display = 'none';
         });
 
-        // VERİ ÇEKME
+        // GÖREVLERİ EKRANA BASMA
         onSnapshot(query(remindersRef, orderBy("createdAt", "desc")), (snap) => {
             const list = document.getElementById('remindersList'); list.innerHTML = ''; currentRemindersData = [];
             if (snap.empty) { list.innerHTML = '<p style="text-align: center; color: var(--text-muted); margin-top: 30px;">Görev yok.</p>'; return; }
@@ -418,9 +433,9 @@
             });
         });
         window.toggleReminder = async (id, c) => { await updateDoc(doc(db, "reminders", id), { completed: !c }); };
-        window.deleteReminder = async (id) => { if(confirm("Sil?")) await deleteDoc(doc(db, "reminders", id)); };
+        window.deleteReminder = async (id) => { if(confirm("Silmek istediğinize emin misiniz?")) await deleteDoc(doc(db, "reminders", id)); };
 
-        // NOTLAR
+        // NOTLARI EKRANA BASMA VE EKLEME
         document.getElementById('saveNoteBtn').addEventListener('click', async () => {
             const t = document.getElementById('noteTitleInput').value.trim();
             const b = document.getElementById('noteContentInput').value.trim();
@@ -434,12 +449,12 @@
             if (snap.empty) { list.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Not yok.</p>'; return; }
             snap.forEach(d => {
                 const n = d.data();
-                list.innerHTML += `<div class="card-base" style="border-left-color:#f59e0b;"><div style="display:flex; justify-content:space-between; align-items:flex-start;"><div><span class="cat-badge" style="background:#fef3c7; color:#d97706;">${n.category}</span><div style="font-weight:800; font-size:1.05rem; margin-top:6px; color:var(--text-main);">${n.title}</div></div><button class="btn-icon" style="color:#ef4444;" onclick="deleteNote('${d.id}')">✕</button></div><div style="font-size:0.9rem; line-height:1.4; white-space:pre-wrap;">${n.content}</div></div>`;
+                list.innerHTML += `<div class="card-base"><div style="display:flex; justify-content:space-between; align-items:flex-start;"><div><span class="cat-badge">${n.category}</span><div style="font-weight:800; font-size:1.05rem; margin-top:6px; color:var(--text-main);">${n.title}</div></div><button class="btn-icon" style="color:#ef4444;" onclick="deleteNote('${d.id}')">✕</button></div><div style="font-size:0.9rem; line-height:1.4; white-space:pre-wrap;">${n.content}</div></div>`;
             });
         });
-        window.deleteNote = async (id) => { if(confirm("Sil?")) await deleteDoc(doc(db, "notes", id)); };
+        window.deleteNote = async (id) => { if(confirm("Notu sil?")) await deleteDoc(doc(db, "notes", id)); };
 
-        // API & AI MOTORU
+        // GEMINI API BAĞLANTISI
         let geminiKey = localStorage.getItem('justtalk_gemini_key') || '';
         document.getElementById('settingsBtn').addEventListener('click', () => {
             const input = prompt("Gemini API Anahtarınızı girin:", geminiKey);
@@ -450,7 +465,7 @@
         const chatInput = document.getElementById('chatInput');
 
         async function callGemini(promptText) {
-            if (!geminiKey) throw new Error("API Anahtarı eksik. Lütfen '⚙️ API' butonundan ekleyin.");
+            if (!geminiKey) throw new Error("Lütfen '⚙️ API' butonundan anahtarınızı ekleyin.");
             const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${geminiKey}`, {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }], generationConfig: { responseMimeType: "application/json" } })
@@ -460,7 +475,7 @@
             return data.candidates[0].content.parts[0].text;
         }
 
-        // AKILLI MİKROFON YÖNLENDİRİCİSİ (Intent Routing)
+        // AKILLI MİKROFON YÖNLENDİRİCİSİ VE DÜZELTİLMİŞ PROMPT
         const micBtn = document.getElementById('micBtn');
         const statusText = document.getElementById('statusText');
         const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -482,31 +497,31 @@
             recognition.onend = () => { micBtn.className = 'fab-mic'; statusText.innerText = ""; };
             recognition.onresult = async (e) => {
                 const transcript = e.results[0][0].transcript;
-                micBtn.className = 'fab-mic thinking'; statusText.innerText = "Yapay Zeka Karar Veriyor...";
+                micBtn.className = 'fab-mic thinking'; statusText.innerText = "Karar Veriyor...";
                 
                 try {
                     const prompt = `Kullanıcı komutu: "${transcript}".
-Senin görevin kullanıcının ne istediğini anlamak.
-Eğer kullanıcı bir hatırlatıcı veya görev eklemek istiyorsa (Örnek: "yarın süt al", "bunu listeye ekle", "akşam ders çalışacağım"):
-{"intent": "reminder", "task": "yapılacak iş (zaman zarflarını metinden temizle)", "category": "kategori adı", "chat_response": ""}
+Sen Efehan'ın asistanısın. Kullanıcının ne istediğini anla.
 
-Eğer kullanıcı genel bir soru soruyorsa, sohbet ediyorsa veya bilgi istiyorsa (Örnek: "hava nasıl?", "bana şiir yaz", "nasılsın?"):
-{"intent": "chat", "task": "", "category": "", "chat_response": "Kullanıcıya vereceğin samimi ve doğrudan yanıt."}
+Eğer kullanıcı bir hatırlatıcı, görev veya not eklemek istiyorsa (Örn: "yarın süt al", "kitap okuyacağım"):
+{"intent": "reminder", "task": "yapılacak iş", "category": "kategori adı", "chat_response": ""}
 
-SADECE geçerli bir JSON döndür. Başka metin ekleme. Mevcut kategoriler: ${savedCategories.join(", ")}`;
+Eğer kullanıcı genel bir soru soruyorsa, sohbet ediyorsa veya bilgi istiyorsa (Örn: "hava nasıl?", "nasılsın?"):
+{"intent": "chat", "task": "", "category": "", "chat_response": "Kullanıcıya vereceğin samimi ve DÜZ METİN (JSON OLMAYAN) yanıt."}
+
+DİKKAT: YANITINI SADECE VE SADECE GEÇERLİ BİR JSON FORMATINDA VER. BAŞKA HİÇBİR METİN VEYA MARKDOWN KULLANMA.
+Mevcut kategoriler: ${savedCategories.join(", ")}`;
                     
                     let rawJson = await callGemini(prompt);
                     rawJson = rawJson.replace(/```json/g, '').replace(/```/g, '').trim();
                     const aiResult = JSON.parse(rawJson);
 
                     if (aiResult.intent === "chat") {
-                        // CHAT SEKMESİNE YÖNLENDİR
                         switchTab('chat');
                         chatMessages.innerHTML += `<div class="chat-bubble bubble-user">${transcript}</div>`;
                         chatMessages.innerHTML += `<div class="chat-bubble bubble-ai">${aiResult.chat_response}</div>`;
                         chatMessages.scrollTop = chatMessages.scrollHeight;
                     } else {
-                        // GÖREVLERE EKLE
                         const calculatedTime = resolveExactDateTime(transcript);
                         const finalCategory = await ensureCategoryExists(aiResult.category || "Genel");
                         await addDoc(remindersRef, { text: aiResult.task, time: calculatedTime, category: finalCategory, completed: false, createdAt: serverTimestamp() });
@@ -514,8 +529,7 @@ SADECE geçerli bir JSON döndür. Başka metin ekleme. Mevcut kategoriler: ${sa
                         setTimeout(() => statusText.innerText = "", 2000);
                     }
                 } catch (err) {
-                    console.warn("AI Karar Hatası:", err);
-                    // AI çuvallarsa varsayılan olarak görev ekle
+                    console.warn("Yönlendirme başarısız, göreve eklendi:", err);
                     const calculatedTime = resolveExactDateTime(transcript);
                     let taskText = transcript.replace(/\b(yarın|bugün|öbür gün|akşam|sabah|gece|öğlen|saat\s*\d{1,2}(?::\d{2})?)\b/gi, '').replace(/\s{2,}/g, ' ').trim();
                     await addDoc(remindersRef, { text: taskText || transcript, time: calculatedTime, category: "Genel", completed: false, createdAt: serverTimestamp() });
@@ -525,7 +539,7 @@ SADECE geçerli bir JSON döndür. Başka metin ekleme. Mevcut kategoriler: ${sa
         }
         micBtn.addEventListener('click', () => { if(recognition) { try{ recognition.start(); }catch(e){ recognition.stop(); } } });
 
-        // CHAT (SOHBET) GÖNDERME
+        // DÜZELTİLMİŞ DOĞRUDAN SOHBET PROMPTU
         async function sendChatMessage() {
             const msg = chatInput.value.trim(); if (!msg) return;
             chatMessages.innerHTML += `<div class="chat-bubble bubble-user">${msg}</div>`;
@@ -536,7 +550,13 @@ SADECE geçerli bir JSON döndür. Başka metin ekleme. Mevcut kategoriler: ${sa
 
             try {
                 const tasksCtx = currentRemindersData.map(r => `- ${r.text} (${r.time})`).join("\n");
-                const p = `Sen Efehan'ın kişisel asistanısın. Görevleri: \n${tasksCtx || 'Yok'}\nSoru: "${msg}"`;
+                
+                // Buradaki Prompt tamamen düzeltildi, JSON sızıntısı engellendi.
+                const p = `Sen Efehan'ın kişisel asistanısın. Görevleri: \n${tasksCtx || 'Yok'}\n
+Kullanıcının Sorusu: "${msg}"
+
+DİKKAT: YANITINI SADECE DOĞAL BİR METİN OLARAK VER. KESİNLİKLE JSON FORMATI, SÜSLÜ PARANTEZ VEYA KOD BLOĞU KULLANMA. Düz sohbet metni yaz.`;
+                
                 const ans = await callGemini(p);
                 const el = document.getElementById(bubbleId); el.style.opacity = '1'; el.innerText = ans;
             } catch (err) {
