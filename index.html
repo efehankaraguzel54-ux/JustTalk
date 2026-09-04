@@ -6,37 +6,43 @@
     <title>JustTalk Anımsatıcı</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #121212; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-        .mic-btn { transition: all 0.3s ease; }
-        .listening { animation: pulse 1.5s infinite; background-color: #ef4444 !important; }
+        body { background-color: #0f172a; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .mic-btn { transition: all 0.3s ease; box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5); }
+        .mic-btn:active { transform: scale(0.95); }
+        .listening { animation: pulse 1.5s infinite; background-color: #ef4444 !important; box-shadow: 0 10px 25px -5px rgba(239, 68, 68, 0.5); }
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
             70% { box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
             100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
         }
+        .reminder-card { transition: all 0.2s ease; border: 1px solid #1e293b; background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%); }
+        .reminder-card.completed p.main-text { text-decoration: line-through; color: #64748b; }
+        .delete-btn { opacity: 0; transition: opacity 0.2s; }
+        .reminder-card:hover .delete-btn { opacity: 1; }
     </style>
 </head>
-<body class="flex flex-col h-screen p-4">
-    <div class="pt-8 pb-4">
-        <h1 class="text-3xl font-bold text-center">JustTalk</h1>
+<body class="flex flex-col h-screen p-4 selection:bg-blue-500/30">
+    <div class="pt-8 pb-6 flex justify-center items-center gap-2">
+        <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+        <h1 class="text-3xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-300">JustTalk</h1>
     </div>
 
-    <div class="flex-1 overflow-y-auto" id="remindersList">
-        <p class="text-gray-400 text-center mt-10">Henüz anımsatıcı yok. Eklemek için mikrofona dokun.</p>
+    <div class="flex-1 overflow-y-auto px-2 pb-24 space-y-4" id="remindersList">
+        <div class="flex h-full items-center justify-center">
+            <p class="text-slate-500 text-center animate-pulse">Yükleniyor...</p>
+        </div>
     </div>
 
-    <div class="p-6 flex justify-center items-center pb-12">
-        <button id="micBtn" class="mic-btn bg-blue-600 rounded-full w-20 h-20 flex justify-center items-center shadow-lg">
+    <div class="fixed bottom-0 left-0 right-0 p-6 flex justify-center items-center bg-gradient-to-t from-[#0f172a] via-[#0f172a] to-transparent pb-10">
+        <button id="micBtn" class="mic-btn bg-blue-600 hover:bg-blue-500 rounded-full w-20 h-20 flex justify-center items-center">
             <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
         </button>
     </div>
 
     <script type="module">
-        // Firebase kütüphanelerini çağırıyoruz
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
 
-        // Senin ilettiğin anahtar
         const firebaseConfig = {
             apiKey: "AIzaSyD4ZwCI4_e1D8bWfigQ4MAozrC5ZaDDv9A",
             authDomain: "justtalk-ce472.firebaseapp.com",
@@ -54,9 +60,8 @@
         const micBtn = document.getElementById('micBtn');
         const list = document.getElementById('remindersList');
 
-        // Ses tanıma motoru
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (!SpeechRecognition) { alert("Tarayıcınız ses tanımayı desteklemiyor. Lütfen Safari kullanın."); }
+        if (!SpeechRecognition) { alert("Tarayıcınız ses tanımayı desteklemiyor."); }
         
         const recognition = new SpeechRecognition();
         recognition.lang = 'tr-TR';
@@ -67,7 +72,6 @@
         recognition.onresult = async (event) => {
             const text = event.results[0][0].transcript.toLowerCase();
             
-            // Basit kelime analizi ile kategori ve zaman ayıklama
             let time = "Zaman belirtilmedi";
             let category = "Genel";
             
@@ -77,39 +81,59 @@
             if(saatMatch) time += " " + saatMatch[0];
             
             if(text.includes("toplantı") || text.includes("iş") || text.includes("çalışma") || text.includes("ders")) category = "İş / Okul";
-            if(text.includes("kahve") || text.includes("kitap") || text.includes("film") || text.includes("oyun")) category = "Dinlenme / Hobi";
+            if(text.includes("kahve") || text.includes("kitap") || text.includes("film") || text.includes("oyun") || text.includes("halı saha") || text.includes("yürüyüş")) category = "Dinlenme / Hobi";
             if(text.includes("market") || text.includes("alınacak")) category = "Alışveriş";
 
-            // Veritabanına kaydet
             await addDoc(remindersRef, {
                 text: text,
                 time: time,
                 category: category,
+                completed: false,
                 createdAt: serverTimestamp()
             });
         };
 
         micBtn.addEventListener('click', () => { recognition.start(); });
 
-        // Veritabanını canlı olarak dinle ve ekrana yazdır
+        // Global fonksiyonlar ekleyelim (Silme ve Tamamlama için)
+        window.toggleComplete = async (id, currentState) => {
+            await updateDoc(doc(db, "reminders", id), { completed: !currentState });
+        };
+        
+        window.deleteReminder = async (id) => {
+            if(confirm('Bu notu silmek istediğine emin misin?')) {
+                await deleteDoc(doc(db, "reminders", id));
+            }
+        };
+
         onSnapshot(q, (snapshot) => {
             list.innerHTML = '';
             if(snapshot.empty) {
-                list.innerHTML = '<p class="text-gray-400 text-center mt-10">Henüz anımsatıcı yok. Eklemek için mikrofona dokun.</p>';
+                list.innerHTML = '<div class="flex flex-col items-center justify-center h-full text-slate-500 mt-20"><svg class="w-16 h-16 mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg><p>Henüz anımsatıcı yok.</p><p class="text-sm mt-1">Eklemek için mikrofona dokun.</p></div>';
                 return;
             }
-            snapshot.forEach((doc) => {
-                const data = doc.data();
+            snapshot.forEach((docSnap) => {
+                const data = docSnap.data();
+                const id = docSnap.id;
+                const isCompleted = data.completed ? 'completed' : '';
+                
                 list.innerHTML += `
-                    <div class="bg-gray-800 p-4 rounded-2xl mb-3 shadow-lg mx-2 border border-gray-700">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="bg-blue-500/20 text-blue-400 text-xs px-3 py-1 rounded-full font-semibold tracking-wide">${data.category}</span>
-                            <span class="text-gray-400 text-sm flex items-center gap-1">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                ${data.time}
-                            </span>
+                    <div class="reminder-card p-5 rounded-2xl shadow-lg relative ${isCompleted}">
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="bg-blue-900/40 text-blue-300 text-xs px-3 py-1.5 rounded-md font-semibold tracking-wide border border-blue-800/50 uppercase">${data.category}</span>
+                            <div class="flex items-center gap-3">
+                                <span class="text-slate-400 text-sm flex items-center gap-1.5 bg-slate-800/50 px-2 py-1 rounded-md">
+                                    <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    ${data.time}
+                                </span>
+                                <!-- Silme Butonu -->
+                                <button onclick="deleteReminder('${id}')" class="delete-btn text-red-400 hover:text-red-300 hover:bg-red-900/30 p-1.5 rounded-md transition-colors" title="Sil">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                </button>
+                            </div>
                         </div>
-                        <p class="text-lg font-medium tracking-tight mt-1">${data.text.charAt(0).toUpperCase() + data.text.slice(1)}</p>
+                        <!-- Metne tıklandığında üstünü çizer -->
+                        <p onclick="toggleComplete('${id}', ${data.completed})" class="main-text text-xl font-medium tracking-tight mt-2 cursor-pointer select-none">${data.text.charAt(0).toUpperCase() + data.text.slice(1)}</p>
                     </div>
                 `;
             });
