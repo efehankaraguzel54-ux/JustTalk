@@ -7,8 +7,8 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            background-color: #0b0f19;
-            color: #f8fafc;
+            background-color: #0d1117;
+            color: #e6edf3;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             flex-direction: column;
@@ -19,47 +19,67 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 4px 6px 4px;
+            padding: 8px 4px 14px 4px;
+            border-bottom: 1px solid #21262d;
         }
-        h1 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #60a5fa, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
-        .btn-settings {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid #1e293b;
-            color: #94a3b8;
-            padding: 8px 12px;
-            border-radius: 10px;
-            font-size: 0.85rem;
-            cursor: pointer;
+        .clock-time {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #58a6ff;
+            letter-spacing: -0.5px;
+        }
+        .clock-date {
+            font-size: 0.8rem;
+            color: #8b949e;
+            font-weight: 500;
+        }
+        .header-right {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
+        h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #f0f6fc;
+            margin-right: 4px;
+        }
+        .btn-top {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .btn-top:active { background-color: #21262d; }
         #statusText {
             text-align: center;
-            font-size: 0.85rem;
-            color: #c084fc;
+            font-size: 0.8rem;
+            color: #79c0ff;
             min-height: 20px;
-            margin-top: 4px;
+            margin-top: 6px;
             font-weight: 500;
         }
         #remindersList {
             flex: 1;
-            margin: 16px 0;
+            margin: 12px 0;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
         .reminder-card {
-            background: #161f30;
-            border: 1px solid #23324d;
-            border-radius: 16px;
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
             padding: 14px 16px;
             display: flex;
             flex-direction: column;
@@ -67,7 +87,7 @@
         }
         .reminder-card.completed .main-text {
             text-decoration: line-through;
-            color: #64748b;
+            color: #484f58;
         }
         .card-header {
             display: flex;
@@ -75,81 +95,182 @@
             align-items: center;
         }
         .category-badge {
-            background: rgba(168, 85, 247, 0.15);
-            color: #d8b4fe;
-            border: 1px solid rgba(168, 85, 247, 0.3);
+            background-color: #1f242c;
+            color: #58a6ff;
+            border: 1px solid #388bfd33;
             font-size: 0.75rem;
             font-weight: 600;
             padding: 3px 8px;
             border-radius: 6px;
-            text-transform: uppercase;
+        }
+        .card-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         .time-badge {
-            color: #94a3b8;
+            color: #8b949e;
             font-size: 0.8rem;
         }
-        .main-text {
-            font-size: 1.05rem;
-            line-height: 1.4;
-            cursor: pointer;
-        }
-        .btn-delete {
+        .btn-icon {
             background: none;
             border: none;
-            color: #f87171;
-            font-size: 1.1rem;
             cursor: pointer;
             padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-edit { color: #58a6ff; font-size: 0.95rem; }
+        .btn-delete { color: #f85149; font-size: 1rem; }
+        .main-text {
+            font-size: 1rem;
+            line-height: 1.45;
+            cursor: pointer;
+            color: #c9d1d9;
         }
         .controls-wrapper {
-            padding: 16px 0 24px 0;
+            padding: 12px 0 20px 0;
             display: flex;
             justify-content: center;
             align-items: center;
         }
         #micBtn {
-            width: 76px;
-            height: 76px;
+            width: 72px;
+            height: 72px;
             border-radius: 50%;
             border: none;
-            background: #2563eb;
+            background-color: #1f6feb;
             color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
             transition: all 0.2s ease;
             -webkit-tap-highlight-color: transparent;
         }
         #micBtn:active { transform: scale(0.92); }
         #micBtn.listening {
-            background: #ef4444 !important;
-            box-shadow: 0 0 0 16px rgba(239, 68, 68, 0.25);
-            animation: pulseRed 1.2s infinite;
+            background-color: #da3633 !important;
+            animation: pulseSimple 1.2s infinite;
         }
         #micBtn.thinking {
-            background: #9333ea !important;
-            box-shadow: 0 0 0 16px rgba(147, 51, 234, 0.25);
-            animation: pulsePurple 1.2s infinite;
+            background-color: #8957e5 !important;
         }
-        @keyframes pulseRed {
+        @keyframes pulseSimple {
             0% { transform: scale(0.96); }
             50% { transform: scale(1.04); }
             100% { transform: scale(0.96); }
         }
-        @keyframes pulsePurple {
-            0% { transform: scale(0.96); }
-            50% { transform: scale(1.04); }
-            100% { transform: scale(0.96); }
+
+        /* Modal Pencereleri */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            z-index: 99;
+        }
+        .modal-box {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 14px;
+            width: 100%;
+            max-width: 420px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .modal-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #f0f6fc;
+        }
+        .modal-field {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .modal-field label {
+            font-size: 0.75rem;
+            color: #8b949e;
+            font-weight: 600;
+        }
+        .modal-input {
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            color: #e6edf3;
+            border-radius: 8px;
+            padding: 8px 10px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .modal-input:focus { border-color: #58a6ff; }
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 6px;
+        }
+        .btn-modal {
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+        .btn-modal-cancel {
+            background-color: #21262d;
+            border-color: #30363d;
+            color: #c9d1d9;
+        }
+        .btn-modal-save {
+            background-color: #238636;
+            color: #ffffff;
+        }
+        .categories-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            max-height: 180px;
+            overflow-y: auto;
+            margin-top: 6px;
+        }
+        .cat-chip {
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .cat-chip-del {
+            color: #f85149;
+            cursor: pointer;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>JustTalk AI</h1>
-        <button id="settingsBtn" class="btn-settings" type="button">⚙️ API Ayarı</button>
+        <div class="header-left">
+            <div id="clockTime" class="clock-time">--:--:--</div>
+            <div id="clockDate" class="clock-date">-- -- ----</div>
+        </div>
+        <div class="header-right">
+            <h1>JustTalk AI</h1>
+            <button id="catsBtn" class="btn-top" type="button">Kategoriler</button>
+            <button id="settingsBtn" class="btn-top" type="button">⚙️</button>
+        </div>
     </header>
+
     <div id="statusText"></div>
 
     <div id="remindersList">
@@ -158,7 +279,7 @@
 
     <div class="controls-wrapper">
         <button id="micBtn" type="button" aria-label="Konuş">
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
                 <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
                 <line x1="12" y1="19" x2="12" y2="23"></line>
@@ -167,9 +288,53 @@
         </button>
     </div>
 
+    <!-- Düzenleme Modalı -->
+    <div id="editModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-title">Görevi Düzenle</div>
+            <div class="modal-field">
+                <label for="editTextInput">Görev Tanımı</label>
+                <input type="text" id="editTextInput" class="modal-input" placeholder="Görevi yazın...">
+            </div>
+            <div class="modal-field">
+                <label for="editTimeInput">Tarih / Saat</label>
+                <input type="text" id="editTimeInput" class="modal-input" placeholder="Örn: 05.09.2026 20:00">
+            </div>
+            <div class="modal-field">
+                <label for="editCategorySelect">Kategori</label>
+                <select id="editCategorySelect" class="modal-input"></select>
+            </div>
+            <div class="modal-actions">
+                <button id="editCancelBtn" class="btn-modal btn-modal-cancel">Vazgeç</button>
+                <button id="editSaveBtn" class="btn-modal btn-modal-save">Kaydet</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kategoriler Yönetim Modalı -->
+    <div id="catsModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-title">Kategorileri Yönet</div>
+            <div class="modal-field">
+                <label for="newCatInput">Yeni Kategori Ekle</label>
+                <div style="display: flex; gap: 6px;">
+                    <input type="text" id="newCatInput" class="modal-input" style="flex: 1;" placeholder="Kategori adı...">
+                    <button id="addCatBtn" class="btn-modal btn-modal-save" style="padding: 6px 12px;">Ekle</button>
+                </div>
+            </div>
+            <div class="modal-field">
+                <label>Mevcut Kategoriler</label>
+                <div id="catsChipsContainer" class="categories-chips"></div>
+            </div>
+            <div class="modal-actions">
+                <button id="catsCloseBtn" class="btn-modal btn-modal-cancel">Kapat</button>
+            </div>
+        </div>
+    </div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, deleteDoc, doc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyD4ZwCI4_e1D8bWfigQ4MAozrC5ZaDDv9A",
@@ -183,24 +348,206 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const remindersRef = collection(db, "reminders");
+        const categoriesRef = collection(db, "custom_categories");
         const q = query(remindersRef, orderBy("createdAt", "desc"));
 
+        // Canlı Saat ve Tarih
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('clockTime').innerText = `${hours}:${minutes}:${seconds}`;
+
+            const days = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
+            const months = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
+            const dayName = days[now.getDay()];
+            const dayNum = now.getDate();
+            const monthName = months[now.getMonth()];
+            const year = now.getFullYear();
+            document.getElementById('clockDate').innerText = `${dayNum} ${monthName} ${year}, ${dayName}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Kategori Hafızası (Firestore senkronizasyonu)
+        let savedCategories = ["Genel", "Okumak", "Ders", "İş", "Kişisel", "Alışveriş"];
+
+        onSnapshot(categoriesRef, (snap) => {
+            snap.forEach((d) => {
+                const name = d.data().name;
+                if (name && !savedCategories.includes(name)) {
+                    savedCategories.push(name);
+                }
+            });
+            renderCategorySelects();
+        });
+
+        async function ensureCategoryExists(catName) {
+            if (!catName) return "Genel";
+            const formatted = catName.trim().charAt(0).toUpperCase() + catName.trim().slice(1);
+            if (!savedCategories.includes(formatted)) {
+                savedCategories.push(formatted);
+                const catDocId = formatted.toLowerCase().replace(/[^a-z0-9]/g, '_');
+                await setDoc(doc(db, "custom_categories", catDocId), { name: formatted });
+            }
+            renderCategorySelects();
+            return formatted;
+        }
+
+        function renderCategorySelects() {
+            const select = document.getElementById('editCategorySelect');
+            select.innerHTML = '';
+            savedCategories.forEach(cat => {
+                const opt = document.createElement('option');
+                opt.value = cat;
+                opt.innerText = cat;
+                select.appendChild(opt);
+            });
+
+            const chipsContainer = document.getElementById('catsChipsContainer');
+            chipsContainer.innerHTML = '';
+            savedCategories.forEach(cat => {
+                const chip = document.createElement('div');
+                chip.className = 'cat-chip';
+                chip.innerHTML = `<span>${cat}</span>`;
+                if (cat !== "Genel") {
+                    const del = document.createElement('span');
+                    del.className = 'cat-chip-del';
+                    del.innerText = '×';
+                    del.onclick = async () => {
+                        savedCategories = savedCategories.filter(c => c !== cat);
+                        const catDocId = cat.toLowerCase().replace(/[^a-z0-9]/g, '_');
+                        try { await deleteDoc(doc(db, "custom_categories", catDocId)); } catch(e){}
+                        renderCategorySelects();
+                    };
+                    chip.appendChild(del);
+                }
+                chipsContainer.appendChild(chip);
+            });
+        }
+
+        // Akıllı Tarih Hesaplayıcı
+        function resolveDateTime(rawText) {
+            const now = new Date();
+            let targetDate = new Date(now);
+            let timeStr = "";
+            let matched = false;
+
+            const text = rawText.toLowerCase();
+
+            // Gün tespiti
+            if (text.includes("yarın")) {
+                targetDate.setDate(targetDate.getDate() + 1);
+                matched = true;
+            } else if (text.includes("öbür gün") || text.includes("2 gün sonra")) {
+                targetDate.setDate(targetDate.getDate() + 2);
+                matched = true;
+            }
+
+            // Saat tespiti
+            const hourMatch = text.match(/saat\s*(\d{1,2})(?::(\d{2}))?/);
+            if (hourMatch) {
+                const h = parseInt(hourMatch[1], 10);
+                const m = hourMatch[2] ? parseInt(hourMatch[2], 10) : 0;
+                targetDate.setHours(h, m, 0, 0);
+                timeStr = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+                matched = true;
+            } else if (text.includes("akşam")) {
+                targetDate.setHours(20, 0, 0, 0);
+                timeStr = "20:00";
+                matched = true;
+            } else if (text.includes("sabah")) {
+                targetDate.setHours(9, 0, 0, 0);
+                timeStr = "09:00";
+                matched = true;
+            } else if (text.includes("öğlen") || text.includes("öğle")) {
+                targetDate.setHours(13, 0, 0, 0);
+                timeStr = "13:00";
+                matched = true;
+            } else if (text.includes("gece")) {
+                targetDate.setHours(23, 0, 0, 0);
+                timeStr = "23:00";
+                matched = true;
+            }
+
+            if (!matched) return "Zaman belirtilmedi";
+
+            const d = String(targetDate.getDate()).padStart(2, '0');
+            const mo = String(targetDate.getMonth() + 1).padStart(2, '0');
+            const y = targetDate.getFullYear();
+            return timeStr ? `${d}.${mo}.${y} ${timeStr}` : `${d}.${mo}.${y}`;
+        }
+
+        // Arayüz Elementleri
         const micBtn = document.getElementById('micBtn');
         const list = document.getElementById('remindersList');
         const statusText = document.getElementById('statusText');
         const settingsBtn = document.getElementById('settingsBtn');
+        const catsBtn = document.getElementById('catsBtn');
 
         let geminiKey = localStorage.getItem('justtalk_gemini_key') || '';
 
         settingsBtn.addEventListener('click', () => {
-            const input = prompt("Gemini API Anahtarını Girin:", geminiKey);
+            const input = prompt("Gemini API Anahtarınızı girin:", geminiKey);
             if (input !== null) {
                 geminiKey = input.trim();
                 localStorage.setItem('justtalk_gemini_key', geminiKey);
-                alert(geminiKey ? "API anahtarı cihazınıza kaydedildi!" : "API anahtarı silindi.");
+                alert(geminiKey ? "API anahtarı kaydedildi." : "API anahtarı temizlendi.");
             }
         });
 
+        // Kategori Yönetim Modalı Olayları
+        const catsModal = document.getElementById('catsModal');
+        catsBtn.addEventListener('click', () => { catsModal.style.display = 'flex'; });
+        document.getElementById('catsCloseBtn').addEventListener('click', () => { catsModal.style.display = 'none'; });
+        document.getElementById('addCatBtn').addEventListener('click', async () => {
+            const inp = document.getElementById('newCatInput');
+            if (inp.value.trim()) {
+                await ensureCategoryExists(inp.value.trim());
+                inp.value = '';
+            }
+        });
+
+        // Düzenleme Modalı Olayları
+        let currentEditDocId = null;
+        const editModal = document.getElementById('editModal');
+        const editTextInput = document.getElementById('editTextInput');
+        const editTimeInput = document.getElementById('editTimeInput');
+        const editCategorySelect = document.getElementById('editCategorySelect');
+
+        window.openEditModal = (id, text, time, category) => {
+            currentEditDocId = id;
+            editTextInput.value = text;
+            editTimeInput.value = time;
+            ensureCategoryExists(category).then(() => {
+                editCategorySelect.value = category;
+                editModal.style.display = 'flex';
+            });
+        };
+
+        document.getElementById('editCancelBtn').addEventListener('click', () => {
+            editModal.style.display = 'none';
+            currentEditDocId = null;
+        });
+
+        document.getElementById('editSaveBtn').addEventListener('click', async () => {
+            if (!currentEditDocId) return;
+            const newText = editTextInput.value.trim();
+            const newTime = editTimeInput.value.trim();
+            const newCategory = editCategorySelect.value;
+            if (newText) {
+                await updateDoc(doc(db, "reminders", currentEditDocId), {
+                    text: newText,
+                    time: newTime || "Zaman belirtilmedi",
+                    category: newCategory
+                });
+            }
+            editModal.style.display = 'none';
+            currentEditDocId = null;
+        });
+
+        // Ses Tanıma ve Yapay Zeka
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         let recognition = null;
 
@@ -214,14 +561,12 @@
                 micBtn.className = 'listening';
                 statusText.innerText = "Dinleniyor...";
             };
-
             recognition.onend = () => {
                 if (micBtn.className === 'listening') {
                     micBtn.className = '';
                     statusText.innerText = "";
                 }
             };
-
             recognition.onerror = (e) => {
                 micBtn.className = '';
                 statusText.innerText = "Ses algılanamadı (" + e.error + ")";
@@ -229,87 +574,66 @@
 
             recognition.onresult = async (event) => {
                 const transcript = event.results[0][0].transcript;
-
-                if (!geminiKey) {
-                    alert("Lütfen sağ üstteki '⚙️ API Ayarı' butonuna basarak API anahtarınızı girin.");
-                    statusText.innerText = "";
-                    micBtn.className = '';
-                    return;
-                }
-
                 micBtn.className = 'thinking';
-                statusText.innerText = "Yapay zeka analiz ediyor...";
+                statusText.innerText = "Analiz ediliyor...";
 
-                try {
-                    const prompt = `Aşağıdaki kullanıcı komutunu analiz et. SADECE geçerli bir JSON döndür. Markdown etiketleri (\`\`\`json) veya fazladan hiçbir metin ekleme.
-Format:
-{"text": "yapılacak ana iş", "time": "bahsedilen saat veya gün", "category": "kullanıcının söylediği kategori ya da bağlama en uygun kısa kategori adı"}
+                const calculatedTime = resolveDateTime(transcript);
+                let taskText = transcript;
+                let finalCategory = "Genel";
 
-Kullanıcı komutu: "${transcript}"`;
+                // Eğer Gemini anahtarı varsa model üzerinden analiz et
+                if (geminiKey) {
+                    try {
+                        const nowContext = new Date().toISOString();
+                        const prompt = `Kullanıcı komutu: "${transcript}".
+Şu anki tarih ve saat: ${nowContext}.
+Mevcut kategoriler: ${savedCategories.join(", ")}.
+Görevi analiz et. Kullanıcı belirli bir kategoriye eklenmesini istediyse o kategoriyi (gerekirse yeni kategori adı üreterek) ver.
+SADECE şu formatta geçerli bir JSON döndür, başka hiçbir metin ekleme:
+{"task": "yapılacak ana iş", "category": "kategori adı"}`;
 
-                    // Google'ın hata mesajında doğrudan belirttiği güncel modeller
-                    const models = [
-                        'gemini-3.5-flash-lite',
-                        'gemini-3-flash-preview',
-                        'gemini-2.5-flash'
-                    ];
-
-                    let parsed = null;
-                    let lastErrMsg = "";
-
-                    for (const model of models) {
-                        try {
-                            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiKey}`, {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({
-                                    contents: [{ parts: [{ text: prompt }] }],
-                                    generationConfig: { responseMimeType: "application/json" }
-                                })
-                            });
-
-                            const data = await res.json();
-                            if (data.error) {
-                                lastErrMsg = data.error.message;
-                                continue;
-                            }
-
+                        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                contents: [{ parts: [{ text: prompt }] }],
+                                generationConfig: { responseMimeType: "application/json" }
+                            })
+                        });
+                        const data = await res.json();
+                        if (!data.error) {
                             let raw = data.candidates[0].content.parts[0].text.trim();
-                            if (raw.startsWith("```json")) {
-                                raw = raw.replace(/^```json/, "").replace(/```$/, "").trim();
-                            } else if (raw.startsWith("```")) {
-                                raw = raw.replace(/^```/, "").replace(/```$/, "").trim();
-                            }
-
-                            parsed = JSON.parse(raw);
-                            break;
-                        } catch (e) {
-                            lastErrMsg = e.message;
+                            const parsed = JSON.parse(raw);
+                            if (parsed.task) taskText = parsed.task;
+                            if (parsed.category) finalCategory = parsed.category;
                         }
+                    } catch (e) {
+                        console.warn("AI API atlandı, yerel çözümleme devrede:", e);
                     }
-
-                    if (!parsed) {
-                        throw new Error(lastErrMsg || "API yanıt vermedi.");
-                    }
-
-                    await addDoc(remindersRef, {
-                        text: parsed.text || transcript,
-                        time: parsed.time || "Zaman belirtilmedi",
-                        category: parsed.category || "Genel",
-                        completed: false,
-                        createdAt: serverTimestamp()
-                    });
-                    statusText.innerText = "";
-                } catch (err) {
-                    console.error("Yapay Zeka Hatası:", err);
-                    alert("Yapay zeka analiz hatası: " + err.message);
-                    statusText.innerText = "Hata oluştu.";
-                } finally {
-                    micBtn.className = '';
                 }
+
+                // AI yoksa veya kategori belirleyemediyse yerel eşleştirme
+                if (finalCategory === "Genel") {
+                    const catMatch = transcript.match(/([a-zA-ZçğıöşüÇĞİÖŞÜ0-9\s]+?)\s*(?:kategorisi olarak|kategorisine|kategorisi yap)/i);
+                    if (catMatch && catMatch[1]) {
+                        finalCategory = catMatch[1].trim();
+                        taskText = taskText.replace(catMatch[0], '').trim();
+                    }
+                }
+
+                finalCategory = await ensureCategoryExists(finalCategory);
+
+                await addDoc(remindersRef, {
+                    text: taskText,
+                    time: calculatedTime,
+                    category: finalCategory,
+                    completed: false,
+                    createdAt: serverTimestamp()
+                });
+
+                micBtn.className = '';
+                statusText.innerText = "";
             };
-        } else {
-            statusText.innerText = "Tarayıcınız ses tanımayı desteklemiyor.";
         }
 
         micBtn.addEventListener('click', () => {
@@ -317,11 +641,7 @@ Kullanıcı komutu: "${transcript}"`;
                 alert("Lütfen uygulamayı Safari üzerinden açın.");
                 return;
             }
-            try {
-                recognition.start();
-            } catch (err) {
-                recognition.stop();
-            }
+            try { recognition.start(); } catch (e) { recognition.stop(); }
         });
 
         window.toggleComplete = async (id, currentState) => {
@@ -329,7 +649,7 @@ Kullanıcı komutu: "${transcript}"`;
         };
 
         window.deleteReminder = async (id) => {
-            if (confirm("Bu anımsatıcıyı silmek istiyor musunuz?")) {
+            if (confirm("Bu görevi silmek istiyor musunuz?")) {
                 await deleteDoc(doc(db, "reminders", id));
             }
         };
@@ -337,21 +657,25 @@ Kullanıcı komutu: "${transcript}"`;
         onSnapshot(q, (snapshot) => {
             list.innerHTML = '';
             if (snapshot.empty) {
-                list.innerHTML = '<p style="text-align: center; color: #64748b; margin-top: 40px;">Henüz anımsatıcı yok.<br>Konuşmak için mikrofona bas.</p>';
+                list.innerHTML = '<p style="text-align: center; color: #484f58; margin-top: 40px;">Henüz görev yok.<br>Konuşmak için mikrofona dokunun.</p>';
                 return;
             }
             snapshot.forEach((docSnap) => {
                 const data = docSnap.data();
                 const id = docSnap.id;
                 const completedClass = data.completed ? 'completed' : '';
+                const cleanText = (data.text || '').replace(/'/g, "\\'");
+                const cleanTime = (data.time || '').replace(/'/g, "\\'");
+                const cleanCat = (data.category || 'Genel').replace(/'/g, "\\'");
 
                 list.innerHTML += `
                     <div class="reminder-card ${completedClass}">
                         <div class="card-header">
-                            <span class="category-badge">${data.category}</span>
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <span class="time-badge">${data.time}</span>
-                                <button class="btn-delete" onclick="deleteReminder('${id}')">✕</button>
+                            <span class="category-badge">${data.category || 'Genel'}</span>
+                            <div class="card-actions">
+                                <span class="time-badge">${data.time || 'Zaman belirtilmedi'}</span>
+                                <button class="btn-icon btn-edit" title="Düzenle" onclick="openEditModal('${id}', '${cleanText}', '${cleanTime}', '${cleanCat}')">✏️</button>
+                                <button class="btn-icon btn-delete" title="Sil" onclick="deleteReminder('${id}')">✕</button>
                             </div>
                         </div>
                         <div class="main-text" onclick="toggleComplete('${id}', ${data.completed})">${data.text}</div>
@@ -362,3 +686,4 @@ Kullanıcı komutu: "${transcript}"`;
     </script>
 </body>
 </html>
+
